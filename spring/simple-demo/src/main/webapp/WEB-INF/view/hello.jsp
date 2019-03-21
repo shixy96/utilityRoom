@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>simple segmenter</title>
+<link rel="shortcut icon"
+	href="<c:url value="/resources/images/sensitive.ico" />">
 <style type="text/css">
 .title {
 	background-color: #f8f8f8;
@@ -22,10 +24,12 @@
 	align-items: center;
 	margin-bottom: 15px;
 }
+
 .operate-left {
 	width: 15%;
 	align-items: flex-start;
 }
+
 .areaContent {
 	padding: 0;
 	width: 639px;
@@ -37,9 +41,9 @@
 	width: 557px;
 	height: 160px;
 	border-radius: 8px;
-	font-family: 'Roboto',arial,sans-serif;
-    font-size: 22px;
-    line-height: 32px;
+	font-family: 'Roboto', arial, sans-serif;
+	font-size: 22px;
+	line-height: 32px;
 }
 
 .term {
