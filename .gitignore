@@ -9,6 +9,8 @@ spring/*/.classpath
 spring/*/.project
 spring/*/.settings
 spring/*/.springBeans
+spring/*/target
+
 
 spring/simple-demo/data
 spring/HanLP/data
