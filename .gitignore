@@ -1,28 +1,14 @@
-
 spring/.classpath
-
 spring/.project
-
 spring/.settings
-
-spring/annotation/.classpath
-
-spring/annotation/.project
-
-spring/annotation/.settings
-
-spring/*/.springBeans
 *.class
+*/target
 
-spring/context/.classpath
-spring/context/.project
 
-spring/context/.settings
-
-spring/simple-demo/.project
-
-spring/simple-demo/.classpath
-spring/simple-demo/.settings
+spring/*/.classpath
+spring/*/.project
+spring/*/.settings
+spring/*/.springBeans
 
 spring/simple-demo/data
-spring/target
+spring/HanLP/data
