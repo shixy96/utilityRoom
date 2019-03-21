@@ -26,7 +26,6 @@ public class HelloController {
 	@RequestMapping(value = "first")
 	public ModelAndView first(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<>();
-		map.put("name", "shixy");
 		List<Term> termList = HanLP.segment("今天，刘志军案的关键人物,山西女商人丁书苗在市二中院出庭受审。");
 		map.put("termList", termList);
 		return new ModelAndView("hello", "model", map);

@@ -16,6 +16,32 @@
 	line-height: 30px;
 }
 
+.operate {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-bottom: 15px;
+}
+.operate-left {
+	width: 15%;
+	align-items: flex-start;
+}
+.areaContent {
+	padding: 0;
+	width: 639px;
+	height: 180px;
+}
+
+.area {
+	padding: 20px 54px 18px 28px;
+	width: 557px;
+	height: 160px;
+	border-radius: 8px;
+	font-family: 'Roboto',arial,sans-serif;
+    font-size: 22px;
+    line-height: 32px;
+}
+
 .term {
 	padding-right: 10px;
 }
@@ -25,36 +51,49 @@
 </head>
 <body>
 	<h3 class="title">It's a simple Word segmenter</h3>
-	<div>
-		<div class='input'>
-			<textarea id="inputArea" rows="10" cols="30">
+	<div class="operate operate-left">
+		<button class='button' onClick="addText()">添加文本</button>
+	</div>
+	<div class="operate">
+		<div class='input areaContent'>
+			<textarea id="inputArea" class="area" rows="10" cols="30">
 			</textarea>
 		</div>
 		<button class='button' onClick="clickBtn()">分词</button>
-		<div class='output'></div>
-		<c:forEach items="${model.termList}" var="term">
-			<span class="term">${term}</span>
-		</c:forEach>
-		
+		<div class='output areaContent'>
+			<textarea id="outputArea" class="area" rows="10" cols="30"
+				disabled="disabled">
+			</textarea>
+		</div>
 	</div>
+	<!-- 
+	<c:forEach items="${model.termList}" var="term">
+		<span class="term">${term}</span>
+	</c:forEach>
+	-->
 	<script type="text/javascript">
+		var textIndex = 0;
 		var placeholders = [ '我新造一个词叫幻想乡你能识别并正确标注词性吗？', '我的希望是希望张晚霞的背影被晚霞映红',
 				'今天，刘志军案的关键人物,山西女商人丁书苗在市二中院出庭受审。', '刘喜杰石国祥会见吴亚琴先进事迹报告团成员' ];
 		$(function() {
-			$('#inputArea').val(placeholders[2]);
 		});
+
+		function addText() {
+			textIndex = ++textIndex % placeholders.length;
+			$('#inputArea').val(placeholders[textIndex]);
+		}
+
 		function clickBtn() {
 			var text = $('#inputArea').val();
-			console.log(text)
-			console.log(typeof text)
 			$.get('segment', {
 				text : text
 			}, function(result) {
-				console.log(result)
-				if(result.hr==0 && result.data) {
-					$.each(result.data, function(index,item) {
-						console.log(item)
-					})
+				if (result.hr == 0 && result.data) {
+					var segment = '';
+					$.each(result.data, function(index, item) {
+						segment += item.word + '  ';
+					});
+					$("#outputArea").val(segment);
 				}
 			});
 		}
