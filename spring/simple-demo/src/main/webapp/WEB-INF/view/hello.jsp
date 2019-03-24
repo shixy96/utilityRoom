@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>simple segmenter</title>
+<title>segment</title>
 <link rel="shortcut icon"
 	href="<c:url value="/resources/images/sensitive.ico" />">
 <style type="text/css">
