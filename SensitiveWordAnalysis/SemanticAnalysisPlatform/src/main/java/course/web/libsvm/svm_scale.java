@@ -37,7 +37,21 @@ class svm_scale {
 		return new BufferedReader(new FileReader(filename));
 	}
 
-	private void output_target(double value) {
+	private void output_to_file(String content, String filename) {
+		if (content != null) {
+			BufferedWriter fp_save = null;
+			try {
+				fp_save = new BufferedWriter(new FileWriter(filename, true));
+				fp_save.write(content.toString());
+				fp_save.close();
+			} catch (IOException e) {
+				System.err.println("can't open file " + filename);
+				System.exit(1);
+			}
+		}
+	}
+
+	private void output_target(double value, String targetName) {
 		if (y_scaling) {
 			if (value == y_min)
 				value = y_lower;
@@ -47,10 +61,10 @@ class svm_scale {
 				value = y_lower + (y_upper - y_lower) * (value - y_min) / (y_max - y_min);
 		}
 
-		System.out.print(value + " ");
+		output_to_file(value + " ", targetName);
 	}
 
-	private void output(int index, double value) {
+	private void output(int index, double value, String targetName) {
 		/* skip single-valued attribute */
 		if (feature_max[index] == feature_min[index])
 			return;
@@ -63,7 +77,7 @@ class svm_scale {
 			value = lower + (upper - lower) * (value - feature_min[index]) / (feature_max[index] - feature_min[index]);
 
 		if (value != 0) {
-			System.out.print(index + ":" + value + " ");
+			output_to_file(index + ":" + value + " ", targetName);
 			new_num_nonzeros++;
 		}
 	}
@@ -80,6 +94,7 @@ class svm_scale {
 		String save_filename = null;
 		String restore_filename = null;
 		String data_filename = null;
+		String target_filename = null;
 
 		for (i = 0; i < argv.length; i++) {
 			if (argv[i].charAt(0) != '-')
@@ -100,6 +115,9 @@ class svm_scale {
 				break;
 			case 's':
 				save_filename = argv[i];
+				break;
+			case 't':
+				target_filename = argv[i];
 				break;
 			case 'r':
 				restore_filename = argv[i];
@@ -292,19 +310,20 @@ class svm_scale {
 
 			StringTokenizer st = new StringTokenizer(line, " \t\n\r\f:");
 			target = Double.parseDouble(st.nextToken());
-			output_target(target);
+			output_target(target, target_filename);
 			while (st.hasMoreElements()) {
 				index = Integer.parseInt(st.nextToken());
 				value = Double.parseDouble(st.nextToken());
 				for (i = next_index; i < index; i++)
-					output(i, 0);
-				output(index, value);
+					output(i, 0, target_filename);
+				output(index, value, target_filename);
 				next_index = index + 1;
 			}
 
 			for (i = next_index; i <= max_index; i++)
-				output(i, 0);
-			System.out.print("\n");
+				output(i, 0, target_filename);
+			output_to_file("\n", target_filename);
+
 		}
 		if (new_num_nonzeros > num_nonzeros)
 			System.err.print("WARNING: original #nonzeros " + num_nonzeros + "\n" + "         new      #nonzeros "
