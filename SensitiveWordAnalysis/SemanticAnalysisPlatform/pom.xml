@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.hankcs</groupId>
-			<artifactId>hanlp</artifactId>
+			<artifactId>SegmentTool</artifactId>
 			<version>1.7.2</version>
 		</dependency>
 	</dependencies>
