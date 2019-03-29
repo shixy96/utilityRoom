@@ -1,5 +1,6 @@
 package course.web.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hankcs.hanlp.HanLP;
+import com.hankcs.hanlp.mining.word2vec.WordVectorModel;
 import com.hankcs.hanlp.seg.common.Term;
 
 import course.web.common.GenericJsonResult;
@@ -23,6 +25,8 @@ import course.web.common.HResult;
 @Controller
 @RequestMapping(value = "/hello/")
 public class HelloController {
+	private static final String MODEL_FILE_NAME = "D:/CS224n_NLP/data/test/word2vec.txt";
+
 	@RequestMapping(value = "first")
 	public ModelAndView first(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -37,6 +41,20 @@ public class HelloController {
 		GenericJsonResult<List<Term>> result = new GenericJsonResult<List<Term>>(HResult.S_OK);
 		List<Term> textSegment = HanLP.segment(text);
 		result.setData(textSegment);
+		return result;
+	}
+
+	@RequestMapping(value = "nearest", method = RequestMethod.GET)
+	public @ResponseBody GenericJsonResult<Map<String, Float>> word2vec(HttpServletRequest request,
+			HttpServletResponse response, @RequestParam(value = "word") String word) throws IOException {
+		WordVectorModel wordVectorModel = new WordVectorModel(MODEL_FILE_NAME);
+		GenericJsonResult<Map<String, Float>> result = new GenericJsonResult<Map<String, Float>>(
+				HResult.S_OK);
+		Map<String, Float> wordResult = new HashMap<String, Float>();
+		for (Map.Entry<String, Float> entry : wordVectorModel.nearest(word)) {
+			wordResult.put(entry.getKey(), entry.getValue());
+		}
+		result.setData(wordResult);
 		return result;
 	}
 
