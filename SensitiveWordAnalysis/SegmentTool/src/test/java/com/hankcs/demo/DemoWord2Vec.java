@@ -53,8 +53,9 @@ public class DemoWord2Vec {
 	}
 
 	static void printNearest(String word, WordVectorModel model) {
-		System.out.printf(
-				"\n                                                Word     Cosine\n------------------------------------------------------------------------\n");
+		System.out.println();
+		System.out.println("\t\t\tWord\t\tCosine");
+		System.out.println("------------------------------------------------------------------------");
 		for (Map.Entry<String, Float> entry : model.nearest(word)) {
 			System.out.printf("%50s\t\t%f\n", entry.getKey(), entry.getValue());
 		}
@@ -69,7 +70,7 @@ public class DemoWord2Vec {
 
 	private static void printHeader(String query) {
 		System.out.printf(
-				"\n%50s          Cosine\n------------------------------------------------------------------------\n",
+				"\n%50s\t\t\tCosine\n------------------------------------------------------------------------\n",
 				query);
 	}
 

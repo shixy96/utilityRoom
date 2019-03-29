@@ -165,35 +165,31 @@ public class Word2VecTrainer {
 		settings.setOutputFile(modelFileName);
 		Word2VecTraining model = new Word2VecTraining(settings);
 		final long timeStart = System.currentTimeMillis();
-//        if (callback == null)
-//        {
-//            callback = new TrainingCallback()
-//            {
-//                public void corpusLoading(float percent)
-//                {
-//                    System.out.printf("\r加载训练语料：%.2f%%", percent);
-//                }
-//
-//                public void corpusLoaded(int vocWords, int trainWords, int totalWords)
-//                {
-//                    System.out.println();
-//                    System.out.printf("词表大小：%d\n", vocWords);
-//                    System.out.printf("训练词数：%d\n", trainWords);
-//                    System.out.printf("语料词数：%d\n", totalWords);
-//                }
-//
-//                public void training(float alpha, float progress)
-//                {
-//                    System.out.printf("\r学习率：%.6f  进度：%.2f%%", alpha, progress);
-//                    long timeNow = System.currentTimeMillis();
-//                    long costTime = timeNow - timeStart + 1;
-//                    progress /= 100;
-//                    String etd = Utility.humanTime((long) (costTime / progress * (1.f - progress)));
-//                    if (etd.length() > 0) System.out.printf("  剩余时间：%s", etd);
-//                    System.out.flush();
-//                }
-//            };
-//        }
+		if (callback == null) {
+			callback = new TrainingCallback() {
+				public void corpusLoading(float percent) {
+					System.out.printf("\r加载训练语料：%.2f%%", percent);
+				}
+
+				public void corpusLoaded(int vocWords, int trainWords, int totalWords) {
+					System.out.println();
+					System.out.printf("词表大小：%d\n", vocWords);
+					System.out.printf("训练词数：%d\n", trainWords);
+					System.out.printf("语料词数：%d\n", totalWords);
+				}
+
+				public void training(float alpha, float progress) {
+					System.out.printf("\r学习率：%.6f  进度：%.2f%%", alpha, progress);
+					long timeNow = System.currentTimeMillis();
+					long costTime = timeNow - timeStart + 1;
+					progress /= 100;
+					String etd = Utility.humanTime((long) (costTime / progress * (1.f - progress)));
+					if (etd.length() > 0)
+						System.out.printf("  剩余时间：%s", etd);
+					System.out.flush();
+				}
+			};
+		}
 		settings.setCallback(callback);
 
 		try {

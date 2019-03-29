@@ -349,6 +349,7 @@ class Word2VecTraining {
 		corpus.learnVocab();
 		logger.info("sorting vocabulary");
 		corpus.sortVocab();
+
 		final int vocabSize = corpus.getVocabSize();
 		final VocabWord[] vocab = corpus.getVocab();
 		logger.info("Vocab size: " + vocabSize);
