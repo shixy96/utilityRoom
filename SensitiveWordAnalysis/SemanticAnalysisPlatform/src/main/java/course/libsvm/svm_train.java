@@ -1,4 +1,4 @@
-package course.web.libsvm;
+package course.libsvm;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import course.web.libsvm.lib.svm;
-import course.web.libsvm.lib.svm_model;
-import course.web.libsvm.lib.svm_node;
-import course.web.libsvm.lib.svm_parameter;
-import course.web.libsvm.lib.svm_print_interface;
-import course.web.libsvm.lib.svm_problem;
+import course.libsvm.lib.svm;
+import course.libsvm.lib.svm_model;
+import course.libsvm.lib.svm_node;
+import course.libsvm.lib.svm_parameter;
+import course.libsvm.lib.svm_print_interface;
+import course.libsvm.lib.svm_problem;
 
 class svm_train {
 	private svm_parameter param; // set by parse_command_line

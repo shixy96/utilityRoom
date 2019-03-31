@@ -1,7 +1,7 @@
 //
 // svm_model
 //
-package course.web.libsvm.lib;
+package course.libsvm.lib;
 public class svm_model implements java.io.Serializable
 {
 	public svm_parameter param;	// parameter

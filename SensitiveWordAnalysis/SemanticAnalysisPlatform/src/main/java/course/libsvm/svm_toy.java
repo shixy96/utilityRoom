@@ -1,4 +1,4 @@
-package course.web.libsvm;
+package course.libsvm;
 
 import java.applet.Applet;
 import java.awt.AWTEvent;
@@ -28,11 +28,11 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import course.web.libsvm.lib.svm;
-import course.web.libsvm.lib.svm_model;
-import course.web.libsvm.lib.svm_node;
-import course.web.libsvm.lib.svm_parameter;
-import course.web.libsvm.lib.svm_problem;
+import course.libsvm.lib.svm;
+import course.libsvm.lib.svm_model;
+import course.libsvm.lib.svm_node;
+import course.libsvm.lib.svm_parameter;
+import course.libsvm.lib.svm_problem;
 
 @SuppressWarnings("serial")
 public class svm_toy extends Applet {

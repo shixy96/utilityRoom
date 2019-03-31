@@ -1,4 +1,4 @@
-package course.web.libsvm;
+package course.libsvm;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -9,11 +9,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import course.web.libsvm.lib.svm;
-import course.web.libsvm.lib.svm_model;
-import course.web.libsvm.lib.svm_node;
-import course.web.libsvm.lib.svm_parameter;
-import course.web.libsvm.lib.svm_print_interface;
+import course.libsvm.lib.svm;
+import course.libsvm.lib.svm_model;
+import course.libsvm.lib.svm_node;
+import course.libsvm.lib.svm_parameter;
+import course.libsvm.lib.svm_print_interface;
 
 class svm_predict {
 	private static svm_print_interface svm_print_null = new svm_print_interface() {

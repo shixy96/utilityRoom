@@ -1,4 +1,4 @@
-package course.web.libsvm;
+package course.libsvm;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Formatter;
 import java.util.StringTokenizer;
 
-class svm_scale {
+public class svm_scale {
 	private String line = null;
 	private double lower = -1.0;
 	private double upper = 1.0;

@@ -1,12 +1,12 @@
-package course.web.libsvm;
+package course.libsvm;
 
 import java.io.IOException;
 
-import course.web.libsvm.lib.svm;
-import course.web.libsvm.lib.svm_model;
-import course.web.libsvm.lib.svm_node;
-import course.web.libsvm.lib.svm_parameter;
-import course.web.libsvm.lib.svm_problem;
+import course.libsvm.lib.svm;
+import course.libsvm.lib.svm_model;
+import course.libsvm.lib.svm_node;
+import course.libsvm.lib.svm_parameter;
+import course.libsvm.lib.svm_problem;
 
 public class Test_svm_predict {
 	public static void main(String[] args) {

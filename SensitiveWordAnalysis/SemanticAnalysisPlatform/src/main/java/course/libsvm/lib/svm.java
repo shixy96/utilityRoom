@@ -1,4 +1,4 @@
-package course.web.libsvm.lib;
+package course.libsvm.lib;
 import java.io.*;
 import java.util.*;
 

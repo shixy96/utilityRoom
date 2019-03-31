@@ -1,4 +1,4 @@
-package course.web.libsvm;
+package course.libsvm;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,11 +6,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import course.web.libsvm.lib.svm;
-import course.web.libsvm.lib.svm_model;
-import course.web.libsvm.lib.svm_node;
-import course.web.libsvm.lib.svm_parameter;
-import course.web.libsvm.lib.svm_problem;
+import course.libsvm.lib.svm;
+import course.libsvm.lib.svm_model;
+import course.libsvm.lib.svm_node;
+import course.libsvm.lib.svm_parameter;
+import course.libsvm.lib.svm_problem;
 
 public class SVMTest {
 	public static void main(String[] args) {
