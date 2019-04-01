@@ -13,20 +13,22 @@
 </head>
 <body>
 	<h3 class="title">It's a simple Word segmenter</h3>
-	<div class="operate operate-left">
-		<button class='button' onClick="addText()">添加文本</button>
-	</div>
 	<div class="operate">
-		<div class='input areaContent'>
+		<div class="operate-left">
+			<button class='button' onClick="addText()">添加文本</button>
+		</div>
+		<div class="operate-right">
+			<button class='button' onClick="clickBtn()">分词</button>
+			<button class='button' onClick="getTextAnalysisResult()">敏感分析</button>
+		</div>
+	</div>
+	<div class='areaContent'>
+		<div class="input-wrap">
 			<textarea id="inputArea" class="area" rows="10" cols="30">
 			</textarea>
 		</div>
-		<button class='button' onClick="clickBtn()">分词</button>
-		<button class='button' onClick="getTextAnalysisResult()">敏感分析</button>
-		<div class='output areaContent'>
-			<textarea id="outputArea" class="area" rows="10" cols="30"
-				disabled="disabled">
-			</textarea>
+		<div class="output-wrap">
+			<span id="outputArea" class="area area-out-span"></span>
 		</div>
 	</div>
 
@@ -36,6 +38,8 @@
 		var placeholders = [ '我新造一个词叫幻想乡你能识别并正确标注词性吗？', '我的希望是希望张晚霞的背影被晚霞映红',
 				'今天，刘志军案的关键人物,山西女商人丁书苗在市二中院出庭受审。', '刘喜杰石国祥会见吴亚琴先进事迹报告团成员' ];
 		$(function() {
+			$("#inputArea").val("");
+			$("#outputArea").val("");
 		});
 
 		function addText() {
@@ -53,7 +57,7 @@
 					$.each(result.data, function(index, item) {
 						segment += item.word + '  ';
 					});
-					$("#outputArea").val(segment);
+					$("#outputArea").html(segment);
 				}
 			});
 		}
