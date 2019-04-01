@@ -11,6 +11,7 @@
 	<modules>
 		<module>SegmentTool</module>
 		<module>SemanticAnalysisPlatform</module>
+		<module>SemanticAnalysisServer</module>
 	</modules>
 	<build>
 		<plugins>
