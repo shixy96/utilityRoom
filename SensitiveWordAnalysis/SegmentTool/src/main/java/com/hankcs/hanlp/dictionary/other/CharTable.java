@@ -11,6 +11,10 @@
  */
 package com.hankcs.hanlp.dictionary.other;
 
+import static com.hankcs.hanlp.utility.Predefine.logger;
+
+import java.io.ObjectInputStream;
+
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.corpus.document.sentence.Sentence;
 import com.hankcs.hanlp.corpus.document.sentence.word.CompoundWord;
@@ -18,10 +22,6 @@ import com.hankcs.hanlp.corpus.document.sentence.word.IWord;
 import com.hankcs.hanlp.corpus.document.sentence.word.Word;
 import com.hankcs.hanlp.corpus.io.IOUtil;
 import com.hankcs.hanlp.utility.Predefine;
-
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import static com.hankcs.hanlp.utility.Predefine.logger;
 
 /**
  * 字符正规化表
@@ -135,7 +135,7 @@ public class CharTable
      * 正规化一些字符（原地正规化）
      * @param charArray 字符
      */
-    public static void normalization(char[] charArray)
+	public static void normalization(char[] charArray)
     {
         assert charArray != null;
         for (int i = 0; i < charArray.length; i++)

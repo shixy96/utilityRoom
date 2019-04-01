@@ -10,24 +10,22 @@
  */
 package com.hankcs.hanlp.model.crf;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+//import static com.hankcs.hanlp.classification.utilities.io.ConsoleLogger.logger;
+
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.corpus.document.sentence.Sentence;
 import com.hankcs.hanlp.corpus.document.sentence.word.Word;
 import com.hankcs.hanlp.dictionary.other.CharTable;
 import com.hankcs.hanlp.model.crf.crfpp.FeatureIndex;
-import com.hankcs.hanlp.model.crf.crfpp.TaggerImpl;
 import com.hankcs.hanlp.model.perceptron.PerceptronSegmenter;
 import com.hankcs.hanlp.model.perceptron.feature.FeatureMap;
 import com.hankcs.hanlp.model.perceptron.instance.CWSInstance;
 import com.hankcs.hanlp.tokenizer.lexical.Segmenter;
-
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-//import static com.hankcs.hanlp.classification.utilities.io.ConsoleLogger.logger;
 
 /**
  * @author hankcs

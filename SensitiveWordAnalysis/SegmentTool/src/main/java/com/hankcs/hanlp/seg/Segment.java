@@ -11,6 +11,15 @@
  */
 package com.hankcs.hanlp.seg;
 
+import static com.hankcs.hanlp.utility.Predefine.logger;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.collection.AhoCorasick.AhoCorasickDoubleArrayTrie;
 import com.hankcs.hanlp.collection.trie.DoubleArrayTrie;
@@ -27,10 +36,6 @@ import com.hankcs.hanlp.seg.common.WordNet;
 import com.hankcs.hanlp.utility.Predefine;
 import com.hankcs.hanlp.utility.SentencesUtil;
 import com.hankcs.hanlp.utility.TextUtility;
-
-import java.util.*;
-
-import static com.hankcs.hanlp.utility.Predefine.logger;
 
 /**
  * 分词器（分词服务）<br>
@@ -585,7 +590,7 @@ public abstract class Segment
      * @param text 待分词文本
      * @return 单词列表
      */
-    public List<Term> seg(char[] text)
+	public List<Term> seg(char[] text)
     {
         assert text != null;
         if (HanLP.Config.Normalization)
