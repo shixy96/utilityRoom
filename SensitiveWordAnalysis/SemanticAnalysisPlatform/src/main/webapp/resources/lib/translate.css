@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.title {
+	background-color: #f8f8f8;
+	margin-bottom: 30px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.operate {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-bottom: 15px;
+}
+
+.operate-left {
+	width: 15%;
+	align-items: flex-start;
+}
+
+.areaContent {
+	padding: 0;
+	width: 639px;
+	height: 180px;
+}
+
+.area {
+	padding: 20px 54px 18px 28px;
+	width: 557px;
+	height: 160px;
+	border-radius: 8px;
+	font-family: 'Roboto', arial, sans-serif;
+	font-size: 22px;
+	line-height: 32px;
+}
+
+.term {
+	padding-right: 10px;
+}

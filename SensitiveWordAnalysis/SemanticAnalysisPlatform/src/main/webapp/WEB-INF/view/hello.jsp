@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -8,50 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>segment</title>
-<link rel="shortcut icon"
-	href="<c:url value="/resources/images/sensitive.ico" />">
-<style type="text/css">
-.title {
-	background-color: #f8f8f8;
-	margin-bottom: 30px;
-	text-align: center;
-	line-height: 30px;
-}
-
-.operate {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	margin-bottom: 15px;
-}
-
-.operate-left {
-	width: 15%;
-	align-items: flex-start;
-}
-
-.areaContent {
-	padding: 0;
-	width: 639px;
-	height: 180px;
-}
-
-.area {
-	padding: 20px 54px 18px 28px;
-	width: 557px;
-	height: 160px;
-	border-radius: 8px;
-	font-family: 'Roboto', arial, sans-serif;
-	font-size: 22px;
-	line-height: 32px;
-}
-
-.term {
-	padding-right: 10px;
-}
-</style>
-<script type="text/javascript"
-	src="<c:url value="/resources/lib/jquery-3.3.1.js" />"></script>
+<link rel="shortcut icon" href="<c:url value="/resources/images/sensitive.ico" />">
+<link rel="stylesheet" href="<c:url value="/resources/lib/translate.css" />">
+<script type="text/javascript" src="<c:url value="/resources/lib/jquery-3.3.1.js" />"></script>
 </head>
 <body>
 	<h3 class="title">It's a simple Word segmenter</h3>
@@ -70,11 +28,6 @@
 			</textarea>
 		</div>
 	</div>
-	<!-- 
-	<c:forEach items="${model.termList}" var="term">
-		<span class="term">${term}</span>
-	</c:forEach>
-	-->
 
 	<h3 class="title">It's a simple Word2Vec nearest</h3>
 	<div class="operate operate-left">

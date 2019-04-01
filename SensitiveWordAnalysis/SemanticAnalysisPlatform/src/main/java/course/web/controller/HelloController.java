@@ -26,6 +26,14 @@ import course.web.common.HResult;
 @RequestMapping(value = "/hello/")
 public class HelloController {
 	private static final String MODEL_FILE_NAME = "D:/CS224n_NLP/data/test/word2vec.txt";
+	private static WordVectorModel wordVectorModel;
+	static {
+		try {
+			wordVectorModel = new WordVectorModel(MODEL_FILE_NAME);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@RequestMapping(value = "first")
 	public ModelAndView first(HttpServletRequest request, HttpServletResponse response) {
@@ -47,9 +55,7 @@ public class HelloController {
 	@RequestMapping(value = "nearest", method = RequestMethod.GET)
 	public @ResponseBody GenericJsonResult<Map<String, Float>> word2vec(HttpServletRequest request,
 			HttpServletResponse response, @RequestParam(value = "word") String word) throws IOException {
-		WordVectorModel wordVectorModel = new WordVectorModel(MODEL_FILE_NAME);
-		GenericJsonResult<Map<String, Float>> result = new GenericJsonResult<Map<String, Float>>(
-				HResult.S_OK);
+		GenericJsonResult<Map<String, Float>> result = new GenericJsonResult<Map<String, Float>>(HResult.S_OK);
 		Map<String, Float> wordResult = new HashMap<String, Float>();
 		for (Map.Entry<String, Float> entry : wordVectorModel.nearest(word)) {
 			wordResult.put(entry.getKey(), entry.getValue());
