@@ -13,22 +13,28 @@
 </head>
 <body>
 	<h3 class="title">It's a simple Word segmenter</h3>
-	<div class="operate">
-		<div class="operate-left">
-			<button class='button' onClick="addText()">添加文本</button>
-		</div>
-		<div class="operate-right">
-			<button class='button' onClick="clickBtn()">分词</button>
-			<button class='button' onClick="getTextAnalysisResult()">敏感分析</button>
-		</div>
-	</div>
-	<div class='areaContent'>
-		<div class="input-wrap">
-			<textarea id="inputArea" class="area" rows="10" cols="30">
-			</textarea>
-		</div>
-		<div class="output-wrap">
-			<span id="outputArea" class="area area-out-span"></span>
+	<div class="wrap">
+		<div class='areaContent'>
+			<div class="input-wrap">
+				<div class="ls-wrap">
+					<div class="operate-left">
+						<div class='button mode-button button-checked' onClick="clickBtn()">分词</div>
+						<div class='button mode-button' onClick="getTextAnalysisResult()">相似词语</div>
+						<div class='button mode-button' onClick="getTextAnalysisResult()">敏感分析</div>
+					</div>
+					<div class="operate-center">
+						<div class="button-img"></div>
+					</div>
+					<div class="operate-right">
+						<button class='u-random' style="height:100%" onClick="addText()">添加文本</button>
+					</div>
+				</div>
+				<textarea id="inputArea" class="area" rows="10" cols="30">
+				</textarea>
+			</div>
+			<div class="output-wrap">
+				<span id="outputArea" class="area area-out-span"></span>
+			</div>
 		</div>
 	</div>
 
@@ -40,6 +46,10 @@
 		$(function() {
 			$("#inputArea").val("");
 			$("#outputArea").val("");
+			$(".mode-button").click(function() {
+				$(".mode-button").removeClass("button-checked");
+				$(this).addClass("button-checked");
+			});
 		});
 
 		function addText() {
