@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+@import url("area.css");
+@import url("button.css");
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	word-break: break-word;
+	-webkit-text-size-adjust: none;
+	position: relative;
+	color: #777;
+	font-family: 'Roboto', arial, sans-serif;
+	font-size: 16px;
+	overflow-x: hidden;
+}
+
+textarea {
+	background-image: none;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
+input:focus, textarea:focus, select:focus {
+	outline-offset: -2px;
+	outline: none !important;
+}
+
+.wrap {
+	width: 1280px;
+	margin: auto;
+}
+
+.title {
+	margin: 50px 20px 20px 50px;
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+	line-height: 30px;
+}
+
+.disable {
+	opacity: 0.5;
+}

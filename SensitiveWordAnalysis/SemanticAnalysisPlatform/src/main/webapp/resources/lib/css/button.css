@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+.button-img {
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 24px !important;
+	width: 24px !important;
+	background-image:
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABD0lEQVRIS9XVvy5EQRTH8c8mEtEo9ApCeASqLewDeAmdBA+CXqXgEST2BbSro5BoNAp/EiGhIWdzR67NNFdmir3JVHfy/Z7fzDn39lR+epX5pkoQxS7gqX0qJROs4QpbuE6SkoJ13OAZA4xCEoIlzBa47GVcNJyXJskoBN8F4DlESAY1BSF9qCn4xHYI+pgrcEyLOGk4Yzgua3TRLzx10eRc7OIUbx1TRZtG/48rz81BpDnEAVZx11EwgxXc5iY54EfYb17+R5CtJ8CxjrHX2nGO144Jcts/EjxVXoD5FxGC+EBtFic3wBDMY4iNluQeXwWk72kOJiVFLzkV2pZUEYQoJGfYwWOBI5quf3I28A9H5C3LASEhPQAAAABJRU5ErkJggg=="
+	);
+	outline: none !important;
+	box-shadow: none !important;
+	border: none !important;
+	opacity: .333;
+	cursor: pointer;
+}
+
+.btn-group {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 15px;
+}
+
+.btn-random {
+	display: inline-block;
+	width: 130px;
+	height: 42px;
+	line-height: 42px;
+	background-color: #5ac7cf;
+	border: 1px solid #4284f3;
+	color: #fff;
+	font-size: 14px;
+	text-align: center;
+	cursor: pointer;
+	border-radius: 20px;
+	outline: none;
+	margin-right: 20px;
+}

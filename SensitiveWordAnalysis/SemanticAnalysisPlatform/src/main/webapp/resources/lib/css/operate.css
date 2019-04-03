@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+.operate {
+	position: absolute;
+	top: -48px;
+	width: 200%;
+	z-index: 10;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-top: 1px solid rgba(0, 0, 0, 0.12);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+	background-color: #fff;
+	height: 48px;
+}
+
+.operate-left {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	float: left;
+	text-align: left;
+	height: 48px;
+}
+
+.operate-center {
+	position: absolute;
+	left: 49%;
+	display: flex;
+	align-items: center;
+	height: 48px;
+}
+
+.operate-right {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	float: right;
+	text-align: right;
+	height: 48px;
+}
+
+.mode-tab, .attribute-tab {
+	padding: 0 24px 0 24px;
+	background-color: transparent;
+	background-image: none;
+	border: none;
+	box-shadow: none;
+	box-sizing: border-box;
+	color: rgba(0, 0, 0, 0.54);
+	font-size: 14px;
+	font-weight: 500;
+	height: 46px;
+	line-height: 48px;
+	margin-left: 0;
+	padding: 0 24px;
+	text-transform: uppercase;
+	z-index: 0;
+	position: relative;
+	overflow: hidden;
+	cursor: default;
+}
+
+.mode-tab-checked {
+	color: #4285f4;
+}
+
+.mode-tab-checked:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '';
+	height: 43px;
+	width: 100%;
+	border-bottom: solid 3px #4284f3;
+	animation: border-grow .3s cubic-bezier(0.4, 0, 0.4, 1) 0s;
+}
