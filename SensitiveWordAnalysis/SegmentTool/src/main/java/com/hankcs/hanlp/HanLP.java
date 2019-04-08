@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLSentence;
 import com.hankcs.hanlp.corpus.io.IIOAdapter;
 import com.hankcs.hanlp.dependency.nnparser.NeuralNetworkDependencyParser;
-import com.hankcs.hanlp.dependency.perceptron.parser.KBeamArcEagerDependencyParser;
 import com.hankcs.hanlp.dictionary.py.Pinyin;
 import com.hankcs.hanlp.dictionary.py.PinyinDictionary;
 import com.hankcs.hanlp.dictionary.ts.HongKongToSimplifiedChineseDictionary;
@@ -146,12 +145,6 @@ public class HanLP {
 		public static String WordNatureModelPath = "data/model/dependency/WordNature.txt";
 
 		/**
-		 * 最大熵-依存关系模型
-		 * 
-		 * @deprecated 已废弃，请使用{@link KBeamArcEagerDependencyParser}。未来版本将不再发布该模型，并删除配置项
-		 */
-		public static String MaxEntModelPath = "data/model/dependency/MaxEntModel.txt";
-		/**
 		 * 神经网络依存模型路径
 		 */
 		public static String NNParserModelPath = "data/model/dependency/NNParserModel.txt";
@@ -159,18 +152,6 @@ public class HanLP {
 		 * 感知机ArcEager依存模型路径
 		 */
 		public static String PerceptronParserModelPath = "data/model/dependency/perceptron.bin";
-		/**
-		 * CRF分词模型
-		 *
-		 * @deprecated 已废弃，请使用{@link com.hankcs.hanlp.model.crf.CRFLexicalAnalyzer}。未来版本将不再发布该模型，并删除配置项
-		 */
-		public static String CRFSegmentModelPath = "data/model/segment/CRFSegmentModel.txt";
-		/**
-		 * HMM分词模型
-		 *
-		 * @deprecated 已废弃，请使用{@link PerceptronLexicalAnalyzer}
-		 */
-		public static String HMMSegmentModelPath = "data/model/segment/HMMSegmentModel.bin";
 		/**
 		 * CRF分词模型
 		 */
@@ -281,12 +262,9 @@ public class HanLP {
 				PartOfSpeechTagDictionary = root
 						+ p.getProperty("PartOfSpeechTagDictionary", PartOfSpeechTagDictionary);
 				WordNatureModelPath = root + p.getProperty("WordNatureModelPath", WordNatureModelPath);
-				MaxEntModelPath = root + p.getProperty("MaxEntModelPath", MaxEntModelPath);
 				NNParserModelPath = root + p.getProperty("NNParserModelPath", NNParserModelPath);
 				PerceptronParserModelPath = root
 						+ p.getProperty("PerceptronParserModelPath", PerceptronParserModelPath);
-				CRFSegmentModelPath = root + p.getProperty("CRFSegmentModelPath", CRFSegmentModelPath);
-				HMMSegmentModelPath = root + p.getProperty("HMMSegmentModelPath", HMMSegmentModelPath);
 				CRFCWSModelPath = root + p.getProperty("CRFCWSModelPath", CRFCWSModelPath);
 				CRFPOSModelPath = root + p.getProperty("CRFPOSModelPath", CRFPOSModelPath);
 				CRFNERModelPath = root + p.getProperty("CRFNERModelPath", CRFNERModelPath);

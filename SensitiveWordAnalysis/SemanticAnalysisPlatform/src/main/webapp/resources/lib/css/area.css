@@ -45,4 +45,5 @@
 
 .area-out-span {
 	display: block;
+	overflow-y: scroll;
 }

@@ -11,19 +11,25 @@
  */
 package com.hankcs.hanlp.dictionary;
 
+import static com.hankcs.hanlp.utility.Predefine.logger;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.TreeMap;
+
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.collection.trie.DoubleArrayTrie;
 import com.hankcs.hanlp.corpus.io.ByteArray;
 import com.hankcs.hanlp.corpus.io.IOUtil;
 import com.hankcs.hanlp.corpus.tag.Nature;
-import com.hankcs.hanlp.utility.LexiconUtility;
 import com.hankcs.hanlp.utility.Predefine;
 import com.hankcs.hanlp.utility.TextUtility;
-
-import java.io.*;
-import java.util.*;
-
-import static com.hankcs.hanlp.utility.Predefine.logger;
 
 /**
  * 使用DoubleArrayTrie实现的核心词典
@@ -309,26 +315,6 @@ public class CoreDictionary
             }
 
             return attribute;
-        }
-
-        /**
-         * 获取词性的词频
-         *
-         * @param nature 字符串词性
-         * @return 词频
-         * @deprecated 推荐使用Nature参数！
-         */
-        public int getNatureFrequency(String nature)
-        {
-            try
-            {
-                Nature pos = Nature.create(nature);
-                return getNatureFrequency(pos);
-            }
-            catch (IllegalArgumentException e)
-            {
-                return 0;
-            }
         }
 
         /**

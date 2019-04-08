@@ -48,18 +48,6 @@ public class TextRankKeyword extends KeywordExtractor
     }
 
     /**
-     * 提取关键词
-     *
-     * @param content
-     * @return
-     * @deprecated 请使用 {@link KeywordExtractor#getKeywords(java.lang.String)}
-     */
-    public List<String> getKeyword(String content)
-    {
-        return getKeywords(content);
-    }
-
-    /**
      * 返回全部分词结果和对应的rank
      *
      * @param content

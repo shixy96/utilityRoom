@@ -11,19 +11,19 @@
  */
 package com.hankcs.hanlp.seg.common;
 
-import com.hankcs.hanlp.utility.MathUtility;
-import com.hankcs.hanlp.dictionary.CoreDictionary;
-import com.hankcs.hanlp.dictionary.other.CharType;
-import com.hankcs.hanlp.corpus.tag.Nature;
-import com.hankcs.hanlp.seg.NShort.Path.AtomNode;
-import com.hankcs.hanlp.utility.Predefine;
+import static com.hankcs.hanlp.utility.Predefine.logger;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import static com.hankcs.hanlp.utility.Predefine.logger;
+import com.hankcs.hanlp.corpus.tag.Nature;
+import com.hankcs.hanlp.dictionary.CoreDictionary;
+import com.hankcs.hanlp.dictionary.other.CharType;
+import com.hankcs.hanlp.seg.NShort.Path.AtomNode;
+import com.hankcs.hanlp.utility.MathUtility;
+import com.hankcs.hanlp.utility.Predefine;
 
 /**
  * @author hankcs
@@ -39,13 +39,6 @@ public class WordNet
      * 共有多少个节点
      */
     int size;
-
-    /**
-     * 原始句子
-     *
-     * @deprecated 应当使用数组，这样比较快
-     */
-    public String sentence;
 
     /**
      * 原始句子对应的数组

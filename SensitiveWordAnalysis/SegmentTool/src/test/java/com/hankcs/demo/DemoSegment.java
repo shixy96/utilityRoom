@@ -11,11 +11,10 @@
  */
 package com.hankcs.demo;
 
-import com.hankcs.hanlp.HanLP;
-import com.hankcs.hanlp.seg.Segment;
-import com.hankcs.hanlp.seg.common.Term;
-
 import java.util.List;
+
+import com.hankcs.hanlp.HanLP;
+import com.hankcs.hanlp.seg.common.Term;
 
 /**
  * 标准分词

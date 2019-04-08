@@ -508,16 +508,6 @@ public class CustomDictionary {
 	}
 
 	/**
-	 * 获取词典对应的trie树
-	 *
-	 * @return
-	 * @deprecated 谨慎操作，有可能废弃此接口
-	 */
-	public static BinTrie<CoreDictionary.Attribute> getTrie() {
-		return trie;
-	}
-
-	/**
 	 * 解析一段文本（目前采用了BinTrie+DAT的混合储存形式，此方法可以统一两个数据结构）
 	 * 
 	 * @param text      文本

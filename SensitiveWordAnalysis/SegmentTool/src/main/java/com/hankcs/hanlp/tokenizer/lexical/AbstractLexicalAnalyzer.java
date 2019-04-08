@@ -313,20 +313,6 @@ public class AbstractLexicalAnalyzer extends CharacterBasedSegment implements Le
         return wordList;
     }
 
-    /**
-     * 分词时查询到一个用户词典中的词语，此处控制是否接受它
-     *
-     * @param begin 起始位置
-     * @param end   终止位置
-     * @param value 词性
-     * @return true 表示接受
-     * @deprecated 自1.6.7起废弃，强制模式下为最长匹配，否则按分词结果合并
-     */
-    protected boolean acceptCustomWord(int begin, int end, CoreDictionary.Attribute value)
-    {
-        return config.forceCustomDictionary || (end - begin >= 4 && !value.hasNatureStartsWith("nr") && !value.hasNatureStartsWith("ns") && !value.hasNatureStartsWith("nt"));
-    }
-
     @Override
     protected List<Term> roughSegSentence(char[] sentence)
     {

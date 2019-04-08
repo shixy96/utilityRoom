@@ -15,17 +15,34 @@
  */
 package com.hankcs.hanlp.collection.trie;
 
+import static com.hankcs.hanlp.HanLP.Config.IOAdapter;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
 import com.hankcs.hanlp.collection.AhoCorasick.AhoCorasickDoubleArrayTrie;
 import com.hankcs.hanlp.corpus.io.ByteArray;
 import com.hankcs.hanlp.corpus.io.ByteArrayStream;
 import com.hankcs.hanlp.corpus.io.IOUtil;
 import com.hankcs.hanlp.utility.ByteUtil;
-
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.util.*;
-import static com.hankcs.hanlp.HanLP.Config.IOAdapter;
 
 /**
  * 双数组Trie树
@@ -815,50 +832,6 @@ public class DoubleArrayTrie<V> implements Serializable, ITrie<V>
             {
                 result.add(-n - 1);
             }
-        }
-
-        return result;
-    }
-
-    /**
-     * 前缀查询，包含值
-     *
-     * @param key 键
-     * @return 键值对列表
-     * @deprecated 最好用优化版的
-     */
-    public LinkedList<Map.Entry<String, V>> commonPrefixSearchWithValue(String key)
-    {
-        int len = key.length();
-        LinkedList<Map.Entry<String, V>> result = new LinkedList<Map.Entry<String, V>>();
-        char[] keyChars = key.toCharArray();
-        int b = base[0];
-        int n;
-        int p;
-
-        for (int i = 0; i < len; ++i)
-        {
-            p = b;
-            n = base[p];
-            if (b == check[p] && n < 0)         // base[p] == check[p] && base[p] < 0 查到一个词
-            {
-                result.add(new AbstractMap.SimpleEntry<String, V>(new String(keyChars, 0, i), v[-n - 1]));
-            }
-
-            p = b + (int) (keyChars[i]) + 1;    // 状态转移 p = base[char[i-1]] + char[i] + 1
-            // 下面这句可能产生下标越界，不如改为if (p < size && b == check[p])，或者多分配一些内存
-            if (b == check[p])                  // base[char[i-1]] == check[base[char[i-1]] + char[i] + 1]
-                b = base[p];
-            else
-                return result;
-        }
-
-        p = b;
-        n = base[p];
-
-        if (b == check[p] && n < 0)
-        {
-            result.add(new AbstractMap.SimpleEntry<String, V>(key, v[-n - 1]));
         }
 
         return result;

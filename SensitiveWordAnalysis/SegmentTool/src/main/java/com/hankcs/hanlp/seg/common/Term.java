@@ -54,6 +54,34 @@ public class Term {
 		return word;
 	}
 
+	public String getWordWithNature() {
+		return toString();
+	}
+
+	public String getWord() {
+		return word;
+	}
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+
+	public Nature getNature() {
+		return nature;
+	}
+
+	public void setNature(Nature nature) {
+		this.nature = nature;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 	/**
 	 * 长度
 	 * 

@@ -10,9 +10,9 @@
  */
 package com.hankcs.hanlp.model.crf;
 
-import com.hankcs.hanlp.tokenizer.lexical.AbstractLexicalAnalyzer;
-
 import java.io.IOException;
+
+import com.hankcs.hanlp.tokenizer.lexical.AbstractLexicalAnalyzer;
 
 /**
  * CRF词法分析器（中文分词、词性标注和命名实体识别）

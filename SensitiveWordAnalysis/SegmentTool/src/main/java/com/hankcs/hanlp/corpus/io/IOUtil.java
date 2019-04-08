@@ -559,6 +559,22 @@ public class IOUtil {
 			return new FileInputStream(path);
 		return IOAdapter.open(path);
 	}
+	
+	/**
+	 * 创建输入流（getResourceAsStream）
+	 * 
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
+	public static InputStream newInputStream(String path, boolean useResource) throws IOException {
+		if(!useResource) {
+			return newInputStream(path);
+		}
+		if (IOAdapter == null)
+			return IOUtil.class.getResourceAsStream(path);
+		return IOAdapter.open(path);
+	}
 
 	/**
 	 * 创建输出流（经过IO适配器创建）

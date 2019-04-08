@@ -11,21 +11,24 @@
  */
 package com.hankcs.hanlp.model.crf;
 
+import static com.hankcs.hanlp.utility.Predefine.BIN_EXT;
+import static com.hankcs.hanlp.utility.Predefine.logger;
+
+import java.io.DataOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.hankcs.hanlp.collection.trie.DoubleArrayTrie;
 import com.hankcs.hanlp.collection.trie.ITrie;
 import com.hankcs.hanlp.corpus.io.ByteArray;
 import com.hankcs.hanlp.corpus.io.ICacheAble;
 import com.hankcs.hanlp.corpus.io.IOUtil;
-import com.hankcs.hanlp.model.crf.crfpp.Model;
 import com.hankcs.hanlp.utility.Predefine;
 import com.hankcs.hanlp.utility.TextUtility;
-
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
-import java.util.*;
-
-import static com.hankcs.hanlp.utility.Predefine.BIN_EXT;
-import static com.hankcs.hanlp.utility.Predefine.logger;
 
 /**
  * 这份代码目前做到了与CRF++解码结果完全一致。也可以直接使用移植版的CRF++ {@link CRFLexicalAnalyzer}

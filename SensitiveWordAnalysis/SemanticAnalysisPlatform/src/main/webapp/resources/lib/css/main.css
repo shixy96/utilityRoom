@@ -3,11 +3,17 @@
 @import url("area.css");
 @import url("button.css");
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+
 body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 100%;
 	word-break: break-word;
 	-webkit-text-size-adjust: none;
 	position: relative;
@@ -29,7 +35,7 @@ input:focus, textarea:focus, select:focus {
 	outline: none !important;
 }
 
-.wrap {
+.wrap-m {
 	width: 1280px;
 	margin: auto;
 }
