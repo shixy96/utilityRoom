@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.zip.GZIPInputStream;
 
-public class spider {
+public class Spider {
 	private final String Connection = "Keep-Alive";
 	private final String UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)";
 	private final String Host = "m.weibo.cn";
@@ -20,7 +20,7 @@ public class spider {
 	private final String url = "https://m.weibo.cn/api/comments/show";
 
 	public static void main(String[] args) throws Exception {
-		spider http = new spider();
+		Spider http = new Spider();
 		http.sendGet();
 	}
 

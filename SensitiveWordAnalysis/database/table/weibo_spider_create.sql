@@ -1,18 +1,9 @@
-DROP PROCEDURE IF EXISTS `weibo_spider_table_create`;
-
-DELIMITER $$
-CREATE PROCEDURE `weibo_spider_table_create`()
-BEGIN
-    create table if not exists weibo_spider (
-		id int primary key auto_increment not null, 
-		comment_id int,
-		user_name varchar(256),
-		create_at date,
-		`text` text,
-		likenum int,
-		source text,
-        content varchar(256)
-	) default charset=utf8mb4;
-END$$
-
-DELIMITER ;
+drop table if exists weibo_spider_comment;
+create table weibo_spider_comment (
+	`id` int primary key auto_increment not null, 
+	`text` text default null,
+    `segment_num` int default null,
+    `sensitive_level` double default null,
+	`created_time` timestamp not null default current_timestamp,
+	`updated_time` timestamp not null default current_timestamp on update current_timestamp
+) engine=InnoDB default charset=utf8mb4;
