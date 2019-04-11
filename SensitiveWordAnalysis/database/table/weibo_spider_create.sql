@@ -6,4 +6,4 @@ create table weibo_spider_comment (
     `sensitive_level` double default null,
 	`created_time` timestamp not null default current_timestamp,
 	`updated_time` timestamp not null default current_timestamp on update current_timestamp
-) engine=InnoDB default charset=utf8mb4;
+) engine=InnoDB default charset=utf8mb4 collate=utf8mb4_general_ci;

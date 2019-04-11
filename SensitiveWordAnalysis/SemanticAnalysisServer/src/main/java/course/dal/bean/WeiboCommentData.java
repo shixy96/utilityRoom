@@ -2,14 +2,14 @@ package course.dal.bean;
 
 public class WeiboCommentData {
 	String bid;
-	Boolean comments;
+	String comments;
 	String created_at;
-	Integer disable_reply;
-	Integer floor_number;
+	String disable_reply;
+	String floor_number;
 	String id;
-	Boolean isLikedByMblogAuthor;
-	Integer like_count;
-	Boolean liked;
+	String isLikedByMblogAuthor;
+	String like_count;
+	String liked;
 	String max_id;
 	String mid;
 	String more_info_type;
@@ -29,36 +29,12 @@ public class WeiboCommentData {
 		this.bid = bid;
 	}
 
-	public Boolean getComments() {
-		return comments;
-	}
-
-	public void setComments(Boolean comments) {
-		this.comments = comments;
-	}
-
 	public String getCreated_at() {
 		return created_at;
 	}
 
 	public void setCreated_at(String created_at) {
 		this.created_at = created_at;
-	}
-
-	public Integer getDisable_reply() {
-		return disable_reply;
-	}
-
-	public void setDisable_reply(Integer disable_reply) {
-		this.disable_reply = disable_reply;
-	}
-
-	public Integer getFloor_number() {
-		return floor_number;
-	}
-
-	public void setFloor_number(Integer floor_number) {
-		this.floor_number = floor_number;
 	}
 
 	public String getId() {
@@ -69,27 +45,51 @@ public class WeiboCommentData {
 		this.id = id;
 	}
 
-	public Boolean getIsLikedByMblogAuthor() {
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getDisable_reply() {
+		return disable_reply;
+	}
+
+	public void setDisable_reply(String disable_reply) {
+		this.disable_reply = disable_reply;
+	}
+
+	public String getFloor_number() {
+		return floor_number;
+	}
+
+	public void setFloor_number(String floor_number) {
+		this.floor_number = floor_number;
+	}
+
+	public String getIsLikedByMblogAuthor() {
 		return isLikedByMblogAuthor;
 	}
 
-	public void setIsLikedByMblogAuthor(Boolean isLikedByMblogAuthor) {
+	public void setIsLikedByMblogAuthor(String isLikedByMblogAuthor) {
 		this.isLikedByMblogAuthor = isLikedByMblogAuthor;
 	}
 
-	public Integer getLike_count() {
+	public String getLike_count() {
 		return like_count;
 	}
 
-	public void setLike_count(Integer like_count) {
+	public void setLike_count(String like_count) {
 		this.like_count = like_count;
 	}
 
-	public Boolean getLiked() {
+	public String getLiked() {
 		return liked;
 	}
 
-	public void setLiked(Boolean liked) {
+	public void setLiked(String liked) {
 		this.liked = liked;
 	}
 

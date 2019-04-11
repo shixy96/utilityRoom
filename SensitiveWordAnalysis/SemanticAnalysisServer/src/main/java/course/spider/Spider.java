@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.zip.GZIPInputStream;
 
 import org.springframework.context.ApplicationContext;
@@ -24,13 +25,14 @@ public class Spider {
 	private final String AcceptLanguage = "zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3";
 	private final String AcceptEncoding = "gzip, deflate, br";
 	private final String Referer = "https://m.weibo.cn/detail/4154417035431509";
-	private final String Cookie = "_T_WM=e25a28bec35b27c72d37ae2104433873; WEIBOCN_WM=3349; H5_wentry=H5; backURL=http%3A%2F%2Fm.weibo.cn%2F; SUB=_2A250zXayDeThGeVJ7VYV8SnJyTuIHXVUThr6rDV6PUJbkdBeLRDzkW1FrGCo75fsx_qRR822fcI2HoErRQ..; SUHB=0sqRDiYRHXFJdM; SCF=Ag4UgBbd7u4DMdyvdAjGRMgi7lfo6vB4Or8nQI4-9HQ4cLYm_RgdaeTdAH_68X4EbewMK-X4JMj5IQeuQUymxxc.; SSOLoginState=1506346722; M_WEIBOCN_PARAMS=featurecode%3D20000320%26oid%3D3638527344076162%26luicode%3D10000011%26lfid%3D1076031239246050; H5_INDEX=3; H5_INDEX_TITLE=%E8%8A%82cao%E9%85%B1";
+	private final String Cookie = "_T_WM=d5206f133ba763406c49b7de48ed0400;SUB=_2A25xqtQjDeRhGeNI7FYQ8yfEzDSIHXVTVPxrrDV6PUJbkdAKLWv1kW1NSCOhzR2Mn4fx7k7pvLMuLgarD3bCsN-a; SUHB=0xnCi892NssGAb;  M_WEIBOCN_PARAMS=luicode%3D10000011%26lfid%3D102803%26uicode%3D20000174; MLOGIN=1; WEIBOCN_FROM=1110006030; XSRF-TOKEN=71765d";
 	private final String DNT = "1";
 	private final String commentId = "4154417035431509";
 	private final String url = "https://m.weibo.cn/comments/hotflow";
-	private final String XSRF = "a3ab3c";
+	private final String XSRF = "71765d";
 	private ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 	private SpiderTextDal spiderTextDal = (SpiderTextDal) context.getBean("spiderTextDal");
+	static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 
 	public static void main(String[] args) throws Exception {
 		Spider http = new Spider();
@@ -43,7 +45,7 @@ public class Spider {
 		String max_id = "";
 		String max_id_type = "";
 		while (true) {
-			System.out.println("正在爬取第" + pageNum + "条");
+			System.out.println("正在爬取第" + pageNum + "条, " + df.format(new java.util.Date()));
 			try {
 				String urlNameString = url + "?id=" + commentId + "&mid=4346865082030790";
 				if (!max_id.isEmpty()) {
@@ -60,7 +62,7 @@ public class Spider {
 				connection.setRequestProperty("Accept-Language", AcceptLanguage);
 				connection.setRequestProperty("Accept-Encoding", AcceptEncoding);
 				connection.setRequestProperty("Referer", Referer);
-//				connection.setRequestProperty("Cookie", Cookie);
+				connection.setRequestProperty("Cookie", Cookie);
 				connection.setRequestProperty("MWeibo-Pwa", DNT);
 				connection.setRequestProperty("X-Requested-With", "XMLHttpRequest");
 				connection.setRequestProperty("X-XSRF-TOKEN", XSRF);
@@ -96,7 +98,8 @@ public class Spider {
 					max_id_type = weiboResponseData.getMax_id_type();
 					for (WeiboCommentData retval : response.getData().getData()) {
 						if (!retval.getText().isEmpty()) {
-							spiderTextDal.insert(retval.getText(), null, null);
+							String insertText = SpiderUtil.htmlRemoveTag(retval.getText());
+							spiderTextDal.insert(insertText, null, null);
 						}
 					}
 				}
