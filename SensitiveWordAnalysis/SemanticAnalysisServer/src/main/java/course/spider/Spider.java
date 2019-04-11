@@ -99,7 +99,7 @@ public class Spider {
 					for (WeiboCommentData retval : response.getData().getData()) {
 						if (!retval.getText().isEmpty()) {
 							String insertText = SpiderUtil.htmlRemoveTag(retval.getText());
-							if(!spiderTextManage.exist(insertText)) {
+							if (!insertText.isEmpty() && !spiderTextManage.exist(insertText)) {
 								spiderTextManage.insert(insertText, 0, null, null);
 							}
 						}
