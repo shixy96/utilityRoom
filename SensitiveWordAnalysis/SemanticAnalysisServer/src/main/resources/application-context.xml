@@ -34,8 +34,14 @@
 		<property name="url" value="${jdbc.url}"></property>
 		<property name="username" value="${jdbc.username}"></property>
 		<property name="password" value="${jdbc.password}"></property>
+		<property name="connectionInitSqls">
+			<list>
+				<value>set names 'utf8mb4'</value>
+			</list>
+		</property>
 	</bean>
 
-	<context:property-placeholder location="classpath:db.properties" />
+	<context:property-placeholder
+		location="classpath:db.properties" />
 	<context:component-scan base-package="course.*"></context:component-scan>
 </beans>

@@ -3,6 +3,7 @@ package course.dal.bean;
 public class SpiderTextData {
 	private Integer id;
 	private String text;
+	private Integer isSensitive;
 	private Integer segmentNum;
 	private Double sensitiveLevel;
 
@@ -36,5 +37,13 @@ public class SpiderTextData {
 
 	public void setSensitiveLevel(Double sensitiveLevel) {
 		this.sensitiveLevel = sensitiveLevel;
+	}
+
+	public Integer getIsSensitive() {
+		return isSensitive;
+	}
+
+	public void setIsSensitive(Integer isSensitive) {
+		this.isSensitive = isSensitive;
 	}
 }

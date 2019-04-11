@@ -17,13 +17,14 @@ public class SpiderTextTest {
 	private SpiderTextDal spiderTextDal = (SpiderTextDal) context.getBean("spiderTextDal");
 	private static final String testString = "测试数据";
 	private static final String changeString = "update数据";
+	private static final Integer isSensitive = 0;
 
 	@Test
 	public void test() {
 		Integer id = null;
 		String text = null;
-		spiderTextDal.insert(testString, null, null);
-		List<SpiderTextData> spiderTextDatas = spiderTextDal.completeSearch(null, testString, null, null);
+		spiderTextDal.insert(testString, isSensitive, null, null);
+		List<SpiderTextData> spiderTextDatas = spiderTextDal.completeSearch(null, testString, isSensitive, null, null);
 		if (!spiderTextDatas.isEmpty()) {
 			id = spiderTextDatas.get(0).getId();
 			text = spiderTextDatas.get(0).getText();
@@ -31,15 +32,15 @@ public class SpiderTextTest {
 		assertFalse(id == null);
 		assertEquals(testString, text);
 
-		spiderTextDal.update(id, changeString, null, null);
-		spiderTextDatas = spiderTextDal.completeSearch(id, changeString, null, null);
+		spiderTextDal.update(id, changeString, isSensitive, null, null);
+		spiderTextDatas = spiderTextDal.completeSearch(id, changeString, isSensitive, null, null);
 		if (!spiderTextDatas.isEmpty()) {
 			text = spiderTextDatas.get(0).getText();
 		}
 		assertEquals(changeString, text);
 
 		spiderTextDal.delete(id);
-		spiderTextDatas = spiderTextDal.completeSearch(null, testString, null, null);
+		spiderTextDatas = spiderTextDal.completeSearch(null, testString, isSensitive, null, null);
 		assertTrue(spiderTextDatas.isEmpty());
 	}
 }

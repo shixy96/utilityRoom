@@ -14,27 +14,31 @@ import course.dal.common.DalBaseTemplate;
 
 @Component
 public class SpiderTextDal extends DalBaseTemplate {
-	public void insert(String text, Integer segmentNum, Double sensitiveLevel) {
+	public void insert(String text, Integer isSensitive, Integer segmentNum, Double sensitiveLevel) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("in_text", text);
+		parameters.put("in_is_sensitive", isSensitive);
 		parameters.put("in_segment_num", segmentNum);
 		parameters.put("in_sensitive_level", sensitiveLevel);
 		Execute("spider_text_insert", parameters);
 	}
 
-	public void update(Integer id, String text, Integer segmentNum, Double sensitiveLevel) {
+	public void update(Integer id, String text, Integer isSensitive, Integer segmentNum, Double sensitiveLevel) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("in_id", id);
 		parameters.put("in_text", text);
+		parameters.put("in_is_sensitive", isSensitive);
 		parameters.put("in_segment_num", segmentNum);
 		parameters.put("in_sensitive_level", sensitiveLevel);
 		Execute("spider_text_update", parameters);
 	}
 
-	public List<SpiderTextData> completeSearch(Integer id, String text, Integer segmentNum, Double sensitiveLevel) {
+	public List<SpiderTextData> completeSearch(Integer id, String text, Integer isSensitive, Integer segmentNum,
+			Double sensitiveLevel) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("in_id", id);
 		parameters.put("in_text", text);
+		parameters.put("in_is_sensitive", isSensitive);
 		parameters.put("in_segment_num", segmentNum);
 		parameters.put("in_sensitive_level", sensitiveLevel);
 		return ExecuteReturnList("spider_text_complete_search", parameters, new SpiderTextDataMapper());
@@ -52,6 +56,7 @@ class SpiderTextDataMapper implements RowMapper<SpiderTextData> {
 		SpiderTextData spiderTextData = new SpiderTextData();
 		spiderTextData.setId(rs.getInt("id"));
 		spiderTextData.setText(rs.getString("text"));
+		spiderTextData.setIsSensitive(rs.getInt("is_sensitive"));
 		spiderTextData.setSegmentNum(rs.getInt("segment_num"));
 		spiderTextData.setSensitiveLevel(rs.getDouble("sensitive_level"));
 		return spiderTextData;
