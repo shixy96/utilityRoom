@@ -27,10 +27,10 @@ public class SpiderTextManage {
 	}
 
 	public List<SpiderTextData> search(Integer id, String text, Integer isSensitive, Integer segmentNum,
-			Double sensitiveLevel) {
+			Double sensitiveLevel, int offset, int count) {
 		List<SpiderTextData> result = new ArrayList<SpiderTextData>();
 		try {
-			result = spiderTextDal.completeSearch(id, text, isSensitive, segmentNum, sensitiveLevel);
+			result = spiderTextDal.completeSearch(id, text, isSensitive, segmentNum, sensitiveLevel, offset, count);
 		} catch (Exception e) {
 			logger.error("SpiderTextManage search error", e);
 		}
@@ -38,7 +38,7 @@ public class SpiderTextManage {
 	}
 
 	public boolean exist(String content) {
-		List<SpiderTextData> result = search(null, content, null, null, null);
+		List<SpiderTextData> result = search(null, content, null, null, null, 0, 1);
 		if (!CollectionUtils.isEmpty(result)) {
 			return true;
 		}

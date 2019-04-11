@@ -34,13 +34,15 @@ public class SpiderTextDal extends DalBaseTemplate {
 	}
 
 	public List<SpiderTextData> completeSearch(Integer id, String text, Integer isSensitive, Integer segmentNum,
-			Double sensitiveLevel) {
+			Double sensitiveLevel, int offset, int count) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("in_id", id);
 		parameters.put("in_text", text);
 		parameters.put("in_is_sensitive", isSensitive);
 		parameters.put("in_segment_num", segmentNum);
 		parameters.put("in_sensitive_level", sensitiveLevel);
+		parameters.put("in_offset", offset);
+		parameters.put("in_count", count);
 		return ExecuteReturnList("spider_text_complete_search", parameters, new SpiderTextDataMapper());
 	}
 

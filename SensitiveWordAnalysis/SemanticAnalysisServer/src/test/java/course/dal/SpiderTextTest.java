@@ -24,7 +24,7 @@ public class SpiderTextTest {
 		Integer id = null;
 		String text = null;
 		spiderTextDal.insert(testString, isSensitive, null, null);
-		List<SpiderTextData> spiderTextDatas = spiderTextDal.completeSearch(null, testString, isSensitive, null, null);
+		List<SpiderTextData> spiderTextDatas = spiderTextDal.completeSearch(null, testString, isSensitive, null, null, 0, 10);
 		if (!spiderTextDatas.isEmpty()) {
 			id = spiderTextDatas.get(0).getId();
 			text = spiderTextDatas.get(0).getText();
@@ -33,14 +33,14 @@ public class SpiderTextTest {
 		assertEquals(testString, text);
 
 		spiderTextDal.update(id, changeString, isSensitive, null, null);
-		spiderTextDatas = spiderTextDal.completeSearch(id, changeString, isSensitive, null, null);
+		spiderTextDatas = spiderTextDal.completeSearch(id, changeString, isSensitive, null, null, 0, 10);
 		if (!spiderTextDatas.isEmpty()) {
 			text = spiderTextDatas.get(0).getText();
 		}
 		assertEquals(changeString, text);
 
 		spiderTextDal.delete(id);
-		spiderTextDatas = spiderTextDal.completeSearch(null, testString, isSensitive, null, null);
+		spiderTextDatas = spiderTextDal.completeSearch(null, testString, isSensitive, null, null, 0, 10);
 		assertTrue(spiderTextDatas.isEmpty());
 	}
 }
