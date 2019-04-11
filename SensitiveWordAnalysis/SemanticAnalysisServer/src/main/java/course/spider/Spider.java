@@ -13,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 
-import course.dal.SpiderTextDal;
+import course.bll.SpiderTextManage;
 import course.dal.bean.WeiboCommentData;
 import course.dal.bean.WeiboResponse;
 import course.dal.bean.WeiboResponseData;
@@ -31,7 +31,7 @@ public class Spider {
 	private final String url = "https://m.weibo.cn/comments/hotflow";
 	private final String XSRF = "71765d";
 	private ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
-	private SpiderTextDal spiderTextDal = (SpiderTextDal) context.getBean("spiderTextDal");
+	private SpiderTextManage spiderTextManage = (SpiderTextManage) context.getBean("spiderTextManage");
 	static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 
 	public static void main(String[] args) throws Exception {
@@ -99,7 +99,9 @@ public class Spider {
 					for (WeiboCommentData retval : response.getData().getData()) {
 						if (!retval.getText().isEmpty()) {
 							String insertText = SpiderUtil.htmlRemoveTag(retval.getText());
-							spiderTextDal.insert(insertText, 0, null, null);
+							if(!spiderTextManage.exist(insertText)) {
+								spiderTextManage.insert(insertText, 0, null, null);
+							}
 						}
 					}
 				}
