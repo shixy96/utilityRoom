@@ -1,18 +1,12 @@
 *.class
 .java-version
 
-*/.classpath
-*/.project
-*/.settings
-*/.springBeans
-*/target
-*/data
+*.classpath
+*.project
+*.settings
+*.springBeans
+*target
+*data
 
-*/*/.classpath
-*/*/.project
-*/*/.settings
-*/*/.springBeans
-*/*/target
-*/*/data
 /.metadata/
 Servers/*
