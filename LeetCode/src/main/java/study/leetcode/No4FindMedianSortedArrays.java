@@ -1,4 +1,4 @@
-package leetcode;
+package study.leetcode;
 
 public class No4FindMedianSortedArrays {
 	public static void main(String[] args) {

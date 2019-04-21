@@ -1,4 +1,4 @@
-package leetcode;
+package study.leetcode;
 
 public class No5LongestPalindrome {
 

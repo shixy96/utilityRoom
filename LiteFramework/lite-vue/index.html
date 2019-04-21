@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>compiler</title>
+    </head>
+
+    <body>
+        <div id="app">
+            <p>{{ name }}</p>
+            <p k-text="name"></p>
+            <p>{{ age }}</p>
+            <p>
+                {{ doubleAge }}
+            </p>
+
+            <input type="text" k-model="name" />
+            <button @click="changeName">呵呵</button>
+            <div k-html="html"></div>
+        </div>
+        <script src="./compile.js"></script>
+        <script src="./liteVue.js"></script>
+        <script>
+            const kaikeba = new liteVue({
+                el: "#app",
+                data: {
+                    name: "I am a test",
+                    age: 7,
+                    doubleAge: 14,
+                    html: "<button>this is a button</button>"
+                },
+                created() {
+                    setTimeout(() => {
+                        this.name = 'created test';
+                    }, 1500);
+                },
+                methods: {
+                    changeName() {
+                        this.name = 'hello, world(from method called changeName)';
+                        this.age = 25;
+                    }
+                }
+            });
+        </script>
+    </body>
+
+</html>
