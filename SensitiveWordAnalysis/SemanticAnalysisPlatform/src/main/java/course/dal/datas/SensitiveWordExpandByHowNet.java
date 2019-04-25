@@ -1,4 +1,4 @@
-package course.dal.data;
+package course.dal.datas;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
