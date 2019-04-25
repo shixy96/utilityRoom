@@ -20,22 +20,22 @@ public class SensitiveTxtManager {
 		try {
 			sensitiveTxtDal.insert(content);
 		} catch (Exception e) {
-			logger.error("SensitiveWordManager insert error", e);
+			logger.error("SensitiveTxtManager insert error", e);
 		}
 	}
 
-	public List<String> search(String content) {
+	public List<String> search(String content, int offset, int limit) {
 		List<String> result = new ArrayList<String>();
 		try {
-			result = sensitiveTxtDal.search(content);
+			result = sensitiveTxtDal.search(content, offset, limit);
 		} catch (Exception e) {
-			logger.error("SensitiveWordManager search error", e);
+			logger.error("SensitiveTxtManager search error", e);
 		}
 		return result;
 	}
 
 	public boolean exist(String content) {
-		List<String> result = search(content);
+		List<String> result = search(content, 0, 1);
 		if (result.size() != 0) {
 			return true;
 		}
@@ -46,7 +46,7 @@ public class SensitiveTxtManager {
 		try {
 			sensitiveTxtDal.delete(content);
 		} catch (Exception e) {
-			logger.error("SensitiveWordManager delete error", e);
+			logger.error("SensitiveTxtManager delete error", e);
 		}
 	}
 

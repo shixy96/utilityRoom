@@ -6,7 +6,7 @@ BEGIN
     create table if not exists sensitive_word (
 		id int primary key auto_increment not null, 
         content varchar(256),
-        nature varchar(32)
+        nature_level varchar(32)
 	) default charset=utf8mb4;
 END$$
 

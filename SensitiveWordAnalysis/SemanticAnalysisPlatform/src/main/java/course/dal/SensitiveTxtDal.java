@@ -19,9 +19,11 @@ public class SensitiveTxtDal extends DalBaseTemplate {
 		Execute("sensitive_txt_insert", parameters);
 	}
 
-	public List<String> search(String content) {
+	public List<String> search(String content, int offset, int limit) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("in_content", content);
+		parameters.put("in_offset", offset);
+		parameters.put("in_count", limit);
 		return ExecuteReturnList("sensitive_txt_search", parameters, new RowMapper<String>() {
 			@Override
 			public String mapRow(ResultSet rs, int rowNum) throws SQLException {

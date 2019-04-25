@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import course.dal.SensitiveWordDal;
+import course.dal.bean.SensitiveWordData;
 
 @Component
 public class SensitiveWordManager {
@@ -16,18 +17,18 @@ public class SensitiveWordManager {
 	private SensitiveWordDal sensitiveWordDal;
 	private Logger logger = LoggerFactory.getLogger(SensitiveWordManager.class);
 
-	public void insert(String content) {
+	public void insert(String content, Integer natureLevel) {
 		try {
-			sensitiveWordDal.insert(content);
+			sensitiveWordDal.insert(content, natureLevel);
 		} catch (Exception e) {
 			logger.error("SensitiveWordManager insert error", e);
 		}
 	}
 
-	public List<String> search(String content) {
-		List<String> result = new ArrayList<String>();
+	public List<SensitiveWordData> search(String content, Integer natureLevel, int offset, int limit) {
+		List<SensitiveWordData> result = new ArrayList<SensitiveWordData>();
 		try {
-			result = sensitiveWordDal.search(content);
+			result = sensitiveWordDal.search(content, natureLevel, offset, limit);
 		} catch (Exception e) {
 			logger.error("SensitiveWordManager search error", e);
 		}
@@ -35,16 +36,16 @@ public class SensitiveWordManager {
 	}
 
 	public boolean exist(String content) {
-		List<String> result = search(content);
+		List<SensitiveWordData> result = search(content, null, 0, 1);
 		if (result.size() != 0) {
 			return true;
 		}
 		return false;
 	}
 
-	public void delete(String content) {
+	public void delete(Integer id, String content, Integer natureLevel) {
 		try {
-			sensitiveWordDal.delete(content);
+			sensitiveWordDal.delete(id, content, natureLevel);
 		} catch (Exception e) {
 			logger.error("SensitiveWordManager delete error", e);
 		}
