@@ -2,6 +2,9 @@ package course.util;
 
 public class StringUtil {
 
+	public static void main(String[] args) {
+	}
+
 	public static boolean isEmpty(String text) {
 		if (text == null || text.length() == 0 || text.hashCode() == 65279) {
 			return true;
@@ -13,6 +16,19 @@ public class StringUtil {
 			}
 		}
 		return true;
+	}
+
+	public static String replaceBlank(String string) {
+		if (string == null || string.length() == 0) {
+			return string;
+		}
+		StringBuffer sb = new StringBuffer(string);
+		int index = sb.indexOf(" ");
+		while (index > -1) {
+			sb.replace(index, index + 1, "");
+			index = sb.indexOf(" ");
+		}
+		return sb.toString();
 	}
 
 	public static String replaceWildcard(String string) {

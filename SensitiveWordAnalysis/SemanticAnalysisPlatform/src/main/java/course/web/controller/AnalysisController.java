@@ -28,7 +28,7 @@ import course.web.common.HResult;
 
 @Controller
 @RequestMapping(value = "/hello/")
-public class HelloController {
+public class AnalysisController {
 	private static final String MODEL_FILE_NAME = "I:/CS224n_NLP/data/test/word2vec.txt";
 	private static final float rate = (float) 0.5;
 	private static WordVectorModel wordVectorModel;
