@@ -20,7 +20,7 @@ public class Espresso extends Beverage {
 			return 2.0;
 		default:
 			throw new IllegalArgumentException("must have size");
-	}
+		}
 	}
 
 }
