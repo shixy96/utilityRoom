@@ -24,23 +24,30 @@ import course.dal.bean.SensitiveWordData;
 import course.util.StringUtil;
 
 public class SensitiveWordExpandByHowNet {
+
 	private static ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 	private static SensitiveWordManager sensitiveWordManager = (SensitiveWordManager) context
 			.getBean("sensitiveWordManager");
 	private static HowNetWordManager howNetWordManager = (HowNetWordManager) context.getBean("howNetWordManager");
+
+	private static final String fileNames[] = new String[] { "src/test/resources/敏感词拓展(level2).txt",
+			"src/test/resources/敏感词拓展(level1).txt" };
+	private static final int[] levels = new int[] { SensitiveNatureLevel.secondaryExpansion.level(),
+			SensitiveNatureLevel.threeLevelExpansion.level() };
+
 	private static final int limit_once = 500;
-	private static final String fileName = "src/test/resources/敏感词拓展(HowNet).txt";
 	private static Logger logger = LoggerFactory.getLogger(SensitiveWordExpandByHowNet.class);
 
 	public static void main(String args[]) {
 		int offset = 0;
-		List<SensitiveWordData> datas = sensitiveWordManager.search(null, null, offset++ * limit_once, limit_once);
+		List<SensitiveWordData> datas = sensitiveWordManager.search(null, SensitiveNatureLevel.source.level(),
+				offset++ * limit_once, limit_once);
 		while (datas != null && datas.size() > 0) {
 			for (int i = 0; i < datas.size(); i++) {
 				ExpandSensitive(datas.get(i).getWord());
 			}
 			System.out.println(offset * limit_once);
-			datas = sensitiveWordManager.search(null, null, offset++ * limit_once, limit_once);
+			datas = sensitiveWordManager.search(null, SensitiveNatureLevel.source.level(), offset++ * limit_once, limit_once);
 		}
 	}
 
@@ -74,8 +81,30 @@ public class SensitiveWordExpandByHowNet {
 		if (StringUtil.isEmpty(word)) {
 			return;
 		}
-		List<HowNetData> datas = howNetWordManager.search(null, word, null, null, word, null, null, word, 0,
-				Integer.MAX_VALUE);
+		List<HowNetData> datas;
+		Set<String> expands;
+
+		datas = howNetWordManager.searchComplete(null, word, null, null, word, null, null, word, 0, Integer.MAX_VALUE);
+		expands = getSet(datas);
+		insert(expands, 0, originWord, word);
+
+		datas = howNetWordManager.search(null, word, null, null, word, null, null, word, 0, Integer.MAX_VALUE);
+		expands = getSet(datas);
+		insert(expands, 1, originWord, word);
+	}
+
+	private static void insert(Set<String> expands, int senLevel, String originWord, String word) {
+		for (String expand : expands) {
+			if (!sensitiveWordManager.exist(expand)) {
+				String msg = originWord + "/" + word + "---拓展---" + expand + "\n";
+				System.out.print(msg);
+				output_to_file(msg, fileNames[senLevel]);
+				sensitiveWordManager.insert(expand, levels[senLevel]);
+			}
+		}
+	}
+
+	private static Set<String> getSet(List<HowNetData> datas) {
 		Set<String> expandExp = new HashSet<>();
 		for (HowNetData data : datas) {
 			List<String> words = new ArrayList<>();
@@ -87,19 +116,12 @@ public class SensitiveWordExpandByHowNet {
 				}
 			}
 			for (String expandWord : words) {
-				if (!expandExp.contains(expandWord) && howNetWordManager.exist(expandWord)) {
+				if (!expandExp.contains(expandWord) && howNetWordManager.searchContentLikeExit(expandWord)) {
 					expandExp.add(expandWord);
 				}
 			}
 		}
-		for (String expand : expandExp) {
-			if (!sensitiveWordManager.exist(expand)) {
-				String msg = originWord + "/" + word + "---拓展---" + expand + "\n";
-				System.out.print(msg);
-				output_to_file(msg, fileName);
-				sensitiveWordManager.insert(expand, SensitiveNatureLevel.secondaryExpansion.level());
-			}
-		}
+		return expandExp;
 	}
 
 	private static void output_to_file(String content, String filename) {
@@ -112,6 +134,14 @@ public class SensitiveWordExpandByHowNet {
 			} catch (IOException e) {
 				logger.error("can't open file " + filename, e);
 				System.exit(1);
+			} finally {
+				if(fp_save!=null) {
+					try {
+						fp_save.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}
