@@ -1,10 +1,10 @@
-### definition
+## definition
 
 SHA1算法的输入是最大长度小于264bit的消息，输入消息以512bit的分组为单位处理，输出是160bit的消息摘要。SHA1对“任意”长度的消息生成160bit的消息摘要（MD5仅仅生成128位的摘要），因此抗穷举性更好。
 
 RFC文档：[US Secure Hash Algorithm 1 (SHA1)](<https://tools.ietf.org/html/rfc3174>)
 
-### principle
+## principle
 
 SHA1 的压缩函数，包含轮循环的模块，每轮循环由20个步骤组成，其逻辑图如下图所示。
 
