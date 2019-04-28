@@ -1,7 +1,7 @@
 package course.dal.bean;
 
 public enum SensitiveNatureLevel {
-	source(3, "源敏感词"), secondaryExpansion(2, "HOWNET拓展"), threeLevelExpansion(1, "WORD2VEC拓展");
+	source(3, "源敏感词"), secondaryExpansion(2, "HOWNET完全拓展"), threeLevelExpansion(1, "HOWNET模糊拓展");
 	
 	private int level;
 	private String desc;

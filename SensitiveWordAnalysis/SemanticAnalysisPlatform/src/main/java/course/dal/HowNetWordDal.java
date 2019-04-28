@@ -43,7 +43,23 @@ public class HowNetWordDal extends DalBaseTemplate {
 		return ExecuteReturnList("how_net_word_search", parameters, new HowNetMap());
 	}
 
-	public List<HowNetData> searchContent(String W_C, String W_E, int offset, int limit) {
+	public List<HowNetData> searchComplete(Integer id, String W_C, String G_C, String S_C, String W_E, String G_E,
+			String S_E, String DEF, int offset, int limit) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("in_id", id);
+		parameters.put("in_W_C", StringUtil.replaceWildcard(W_C));
+		parameters.put("in_G_C", StringUtil.replaceWildcard(G_C));
+		parameters.put("in_S_C", StringUtil.replaceWildcard(S_C));
+		parameters.put("in_W_E", StringUtil.replaceWildcard(W_E));
+		parameters.put("in_G_E", StringUtil.replaceWildcard(G_E));
+		parameters.put("in_S_E", StringUtil.replaceWildcard(S_E));
+		parameters.put("in_DEF", StringUtil.replaceWildcard(DEF));
+		parameters.put("in_offset", offset);
+		parameters.put("in_count", limit);
+		return ExecuteReturnList("how_net_word_search_complete", parameters, new HowNetMap());
+	}
+
+	public List<HowNetData> searchContentLikeExit(String W_C, String W_E, int offset, int limit) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("in_W_C", StringUtil.replaceWildcard(W_C));
 		parameters.put("in_W_E", StringUtil.replaceWildcard(W_E));
