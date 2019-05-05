@@ -6,7 +6,8 @@ BEGIN
     create table if not exists txt_collection (
 		id int primary key auto_increment not null, 
         content text,
-        is_sensitive int
+        is_sensitive int,
+        vectors char(45)
 	) default charset=utf8mb4;
 END$$
 

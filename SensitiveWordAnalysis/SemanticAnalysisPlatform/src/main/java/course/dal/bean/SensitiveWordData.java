@@ -3,7 +3,7 @@ package course.dal.bean;
 public class SensitiveWordData {
 	Integer id;
 	String word;
-	Integer level;
+	Double level;
 
 	public Integer getId() {
 		return id;
@@ -21,11 +21,11 @@ public class SensitiveWordData {
 		this.word = word;
 	}
 
-	public Integer getLevel() {
+	public Double getLevel() {
 		return level;
 	}
 
-	public void setLevel(Integer level) {
+	public void setLevel(Double level) {
 		this.level = level;
 	}
 

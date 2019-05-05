@@ -44,7 +44,7 @@ class SensitiveWordMap implements RowMapper<SensitiveWordData> {
 		SensitiveWordData sensitiveWordData = new SensitiveWordData();
 		sensitiveWordData.setId(rs.getInt("id"));
 		sensitiveWordData.setWord(rs.getString("content"));
-		sensitiveWordData.setLevel(rs.getInt("nature_level"));
+		sensitiveWordData.setLevel(rs.getDouble("nature_level"));
 		return sensitiveWordData;
 	}
 }

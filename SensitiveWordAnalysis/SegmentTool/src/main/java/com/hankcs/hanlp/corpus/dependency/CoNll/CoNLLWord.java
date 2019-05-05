@@ -40,6 +40,8 @@ public class CoNLLWord {
 	 */
 	public String DEPREL;
 
+	public Double SENSITIVE_LEVEL;
+
 	/**
 	 * 等效字符串
 	 */
@@ -80,6 +82,7 @@ public class CoNLLWord {
 		this.LEMMA = LEMMA;
 		this.CPOSTAG = CPOSTAG;
 		this.POSTAG = POSTAG;
+		this.SENSITIVE_LEVEL = null;
 		compile();
 	}
 
