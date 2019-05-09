@@ -1,14 +1,10 @@
 package course.dal.datas;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,6 +17,7 @@ import course.bll.SensitiveWordManager;
 import course.bll.TxtCollectionManager;
 import course.dal.bean.SensitiveWordData;
 import course.dal.bean.TxtCollectionData;
+import course.util.IOUtil;
 
 public class VectorMark {
 
@@ -29,7 +26,7 @@ public class VectorMark {
 			.getBean("sensitiveWordManager");
 	private static TxtCollectionManager txtCollectionManager = (TxtCollectionManager) context
 			.getBean("txtCollectionManager");
-	private static final String fileName = "src/test/resources/transformSem2/AnalysisTransformSemantic2";
+	private static final String fileName = "src/test/resources/analysisNearestTrain/AnalysisNearest";
 
 	private static final int limit_once = 500;
 	private static final int max_word = 21;
@@ -37,9 +34,9 @@ public class VectorMark {
 	private static final double max_rate = 0.85;
 	private static final double[] nearest_rates = { .55, .65, .75, .85, .95 };
 	private static final boolean useNearest = true;
+	private static final boolean useTranslate = false;
 	private static WordVectorModel wordVectorModel;
 	private static final String MODEL_FILE_NAME = "I:/CS224n_NLP/data/test/word2vec.txt";
-	private static Logger logger = LoggerFactory.getLogger(SenstiveWordInit.class);
 
 	static {
 		try {
@@ -100,7 +97,9 @@ public class VectorMark {
 					maxWordNum = wordNum;
 					maxWordTxt = datas.get(i).getContent();
 				}
-				SensitiveTranslate(sentence);
+				if (useTranslate) {
+					SensitiveTranslate(sentence);
+				}
 				while (index < wordNum) {
 					sBuffer.append(" ");
 					sBuffer.append(index + 1 + ":" + sentence.word[index].SENSITIVE_LEVEL);
@@ -113,8 +112,9 @@ public class VectorMark {
 				}
 				sBuffer.append("\n");
 				if (index == max_word) {
-					output_to_file(sBuffer.toString(), fileName + nearest_rates[nearest_rate_index]
-							+ (offset <= allNum * max_rate && offset >= allNum * min_rate ? "Train.txt" : "Test.txt"));
+					IOUtil.output_to_file(sBuffer.toString(), fileName + nearest_rates[nearest_rate_index]
+							+ (offset <= allNum * max_rate && offset >= allNum * min_rate ? "Train.txt" : "Test.txt"),
+							true);
 				}
 			}
 			System.out.print(offset);
@@ -127,7 +127,8 @@ public class VectorMark {
 	private static void SensitiveTranslate(CoNLLSentence sentence) {
 		for (CoNLLWord coNLLWord : sentence) {
 //			SensitiveLevelMarkLu(sentence, coNLLWord);
-			SensitiveLevelMark(sentence, coNLLWord);
+			SensitiveLevelMark1(sentence, coNLLWord);
+//			SensitiveLevelMark2(sentence, coNLLWord);
 		}
 	}
 
@@ -150,13 +151,45 @@ public class VectorMark {
 		}
 	}
 
-	private static void SensitiveLevelMark(CoNLLSentence sentence, CoNLLWord word) {
+	private static void SensitiveLevelMark1(CoNLLSentence sentence, CoNLLWord word) {
 		List<CoNLLWord> list = sentence.findChildren(word);
 		if (list.isEmpty()) {
 			return;
 		}
 		for (CoNLLWord child : list) {
-			SensitiveLevelMarkLu(sentence, child);
+			SensitiveLevelMark1(sentence, child);
+			if (child.DEPREL.equals("左附加关系") || child.DEPREL.equals("右附加关系")) {
+				word.SENSITIVE_LEVEL += child.SENSITIVE_LEVEL;
+			} else if (child.DEPREL.equals("主谓关系")) {
+				word.SENSITIVE_LEVEL += 0.9 * child.SENSITIVE_LEVEL;
+			} else if (child.DEPREL.equals("动宾关系")) {
+				word.SENSITIVE_LEVEL += 0.8 * child.SENSITIVE_LEVEL;
+			} else if (child.DEPREL.equals("前置宾语")) {
+				word.SENSITIVE_LEVEL += 0.6 * child.SENSITIVE_LEVEL;
+			} else if (child.DEPREL.equals("间宾关系") || child.DEPREL.equals("间接宾语") || child.DEPREL.equals("兼语")) {
+				word.SENSITIVE_LEVEL += 0.5 * child.SENSITIVE_LEVEL;
+			} else if (child.DEPREL.equals("定中关系") || child.DEPREL.equals("并列关系") || child.DEPREL.equals("状中结构")
+					|| child.DEPREL.equals("动补结构")) {
+				if (child.SENSITIVE_LEVEL > word.SENSITIVE_LEVEL) {
+					word.SENSITIVE_LEVEL = child.SENSITIVE_LEVEL;
+				}
+			}
+//			else if (child.CPOSTAG.equals("m")) {
+//				if (child.SENSITIVE_LEVEL > 0) {
+//					word.SENSITIVE_LEVEL *= child.SENSITIVE_LEVEL;
+//					System.out.println(child);
+//				}
+//			}
+		}
+	}
+
+	private static void SensitiveLevelMark2(CoNLLSentence sentence, CoNLLWord word) {
+		List<CoNLLWord> list = sentence.findChildren(word);
+		if (list.isEmpty()) {
+			return;
+		}
+		for (CoNLLWord child : list) {
+			SensitiveLevelMark2(sentence, child);
 			if (child.DEPREL.equals("左附加关系") || child.DEPREL.equals("右附加关系")) {
 				word.SENSITIVE_LEVEL += child.SENSITIVE_LEVEL;
 			} else if (child.DEPREL.equals("主谓关系") || child.DEPREL.equals("动宾关系")) {
@@ -169,31 +202,11 @@ public class VectorMark {
 				if (child.SENSITIVE_LEVEL > word.SENSITIVE_LEVEL) {
 					word.SENSITIVE_LEVEL = child.SENSITIVE_LEVEL;
 				}
-			} else if (child.CPOSTAG.equals("m")) {
-				word.SENSITIVE_LEVEL *= child.SENSITIVE_LEVEL > 0 ? child.SENSITIVE_LEVEL : 1;
 			}
+//			else if (child.CPOSTAG.equals("m")) {
+//				word.SENSITIVE_LEVEL *= child.SENSITIVE_LEVEL > 0 ? child.SENSITIVE_LEVEL : 1;
+//			}
 		}
 	}
 
-	private static void output_to_file(String content, String filename) {
-		if (content != null) {
-			BufferedWriter fp_save = null;
-			try {
-				fp_save = new BufferedWriter(new FileWriter(filename, true));
-				fp_save.write(content.toString());
-				fp_save.close();
-			} catch (IOException e) {
-				logger.error("can't open file " + filename, e);
-				System.exit(1);
-			} finally {
-				if (fp_save != null) {
-					try {
-						fp_save.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
 }
