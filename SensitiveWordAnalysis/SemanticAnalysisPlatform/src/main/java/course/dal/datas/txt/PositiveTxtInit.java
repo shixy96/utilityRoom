@@ -12,8 +12,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.hankcs.hanlp.HanLP;
 
 import course.bll.TxtCollectionManager;
+import course.dal.datas.DataInit;
 
-public class PositiveTxtInit {
+public class PositiveTxtInit implements DataInit {
 	private static ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 	private static TxtCollectionManager txtCollectionManager = (TxtCollectionManager) context
 			.getBean("txtCollectionManager");
@@ -22,11 +23,12 @@ public class PositiveTxtInit {
 	private static Logger logger = LoggerFactory.getLogger(PositiveTxtInit.class);
 
 	public static void main(String[] args) {
-		FileReader(fileName);
+		PositiveTxtInit positiveTxtInit = new PositiveTxtInit();
+		positiveTxtInit.init(fileName);
 	}
 
-	@SuppressWarnings("resource")
-	private static void FileReader(String fileName) {
+	@Override
+	public void init(String resourceFileName) {
 		int maxWordNum = 0, num = 0;
 		File fp = new File(fileName);
 		if (!fp.isFile()) {
@@ -35,6 +37,7 @@ public class PositiveTxtInit {
 		}
 		try {
 			FileReader fr = new FileReader(fp);
+			@SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(fr);
 			String line = null;
 			while ((line = br.readLine()) != null && num < maxNum) {
@@ -58,4 +61,5 @@ public class PositiveTxtInit {
 		System.out.println("maxWordNum = " + maxWordNum);
 		System.out.println("插入" + num + "条正向文本");
 	}
+
 }

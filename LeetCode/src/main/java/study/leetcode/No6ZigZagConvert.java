@@ -6,7 +6,4 @@ public class No6ZigZagConvert {
 
 	}
 
-	public String convert(String s, int numRows) {
-
-	}
 }

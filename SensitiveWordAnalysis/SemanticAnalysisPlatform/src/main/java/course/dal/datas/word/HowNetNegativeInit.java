@@ -14,22 +14,29 @@ import org.springframework.util.StringUtils;
 
 import course.bll.HowNetWordManager;
 import course.dal.bean.HowNetData;
+import course.dal.datas.DataInit;
 
-public class HowNetNegativeInit {
+public class HowNetNegativeInit implements DataInit {
 	private static ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 	private static HowNetWordManager howNetWordManager = (HowNetWordManager) context.getBean("howNetWordManager");
 	private static final String fileName = "src/test/resources/HowNet.txt";
 	private static Logger logger = LoggerFactory.getLogger(HowNetNegativeInit.class);
 
 	public static void main(String args[]) {
-		Expand();
+		HowNetNegativeInit howNetNegativeInit = new HowNetNegativeInit();
+		howNetNegativeInit.init(fileName);
+	}
+
+	@Override
+	public void init(String resourceFileName) {
+		Expand(resourceFileName);
 	}
 
 	@SuppressWarnings("resource")
-	private static void Expand() {
-		File fp = new File(fileName);
+	private static void Expand(String resourceFileName) {
+		File fp = new File(resourceFileName);
 		if (!fp.isFile()) {
-			logger.error("文件" + fileName + "不存在！");
+			logger.error("文件" + resourceFileName + "不存在！");
 			return;
 		}
 		try {
@@ -139,14 +146,14 @@ public class HowNetNegativeInit {
 		for (String arg1 : splitByColon) {
 			String[] arg2s = arg1.split("\\|");
 			for (String arg2 : arg2s) {
-				result += trimTrans(arg2) + ",";
+				result += trimMark(arg2) + ",";
 			}
 		}
 
 		return result.substring(0, result.length() - 1);
 	}
 
-	private static String trimTrans(String res) {
+	private static String trimMark(String res) {
 		String result = "";
 		if (res == null || res.length() == 0) {
 			return result;

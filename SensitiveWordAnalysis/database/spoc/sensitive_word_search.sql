@@ -10,8 +10,8 @@ CREATE PROCEDURE `sensitive_word_search`(
 BEGIN
     select s.* from sensitive_word s 
     where 
-    (in_content is null or in_content = s.content)
-    and (in_nature_level is null or in_nature_level = s.nature_level)
+    (in_content is null or s.content like in_content )
+    and (in_nature_level is null or s.nature_level like in_nature_level)
     limit in_offset, in_count;
 END$$
 

@@ -10,6 +10,22 @@ public class SematicParams {
 	private double S_ADV;
 	private double S_CMP;
 
+	public SematicParams() {
+	}
+
+	public SematicParams(double s_SBV, double s_VOB, double s_IOB, double s_FOB, double s_DBL, double s_ATT,
+			double s_ADV, double s_CMP) {
+		super();
+		S_SBV = s_SBV;
+		S_VOB = s_VOB;
+		S_IOB = s_IOB;
+		S_FOB = s_FOB;
+		S_DBL = s_DBL;
+		S_ATT = s_ATT;
+		S_ADV = s_ADV;
+		S_CMP = s_CMP;
+	}
+
 	public double getS_SBV() {
 		return S_SBV;
 	}

@@ -14,8 +14,9 @@ import com.hankcs.hanlp.HanLP;
 import course.bll.TxtCollectionManager;
 import course.bll.SensitiveWordManager;
 import course.dal.bean.SensitiveNatureLevel;
+import course.dal.datas.DataInit;
 
-public class SenstiveWordInit {
+public class SenstiveWordInit implements DataInit {
 	private static ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
 	private static SensitiveWordManager sensitiveWordManager = (SensitiveWordManager) context
 			.getBean("sensitiveWordManager");
@@ -26,8 +27,14 @@ public class SenstiveWordInit {
 	private static Logger logger = LoggerFactory.getLogger(SenstiveWordInit.class);
 
 	public static void main(String args[]) {
-		FileReader(fileName1);
-		FileReader(fileName2);
+		SenstiveWordInit senstiveWordInit = new SenstiveWordInit();
+		senstiveWordInit.init(fileName1);
+		senstiveWordInit.init(fileName2);
+	}
+
+	@Override
+	public void init(String resourceFileName) {
+		FileReader(resourceFileName);
 	}
 
 	@SuppressWarnings("resource")
@@ -57,4 +64,5 @@ public class SenstiveWordInit {
 			e.printStackTrace();
 		}
 	}
+
 }

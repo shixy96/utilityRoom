@@ -16,9 +16,8 @@ public class SensitiveWordExport {
 	private static SensitiveWordManager sensitiveWordManager = (SensitiveWordManager) context
 			.getBean("sensitiveWordManager");
 
-	private static final String fileName = "src/test/resources/SensitiveWord.txt";
-	private static final String nature = "sen";
-
+	private static final String outFileName = "src/test/resources/SensitiveWord.txt";
+	private static final String naturePrefix = "sen";
 	private static final int limit_once = 500;
 
 	public static void main(String args[]) {
@@ -28,9 +27,9 @@ public class SensitiveWordExport {
 		while (datas != null && datas.size() > 0) {
 			for (SensitiveWordData sensitiveWordData : datas) {
 				sBuffer = new StringBuffer(StringUtil.replaceBlank(sensitiveWordData.getWord()));
-				sBuffer.append(
-						"	" + nature + sensitiveWordData.getLevel() + "	" + sensitiveWordData.getLevel() + "\n");
-				IOUtil.output_to_file(sBuffer.toString(), fileName, true);
+				sBuffer.append("	" + naturePrefix + sensitiveWordData.getLevel() + "	" + sensitiveWordData.getLevel()
+						+ "\n");
+				IOUtil.output_to_file(sBuffer.toString(), outFileName, true);
 			}
 			System.out.println(offset * limit_once);
 			datas = sensitiveWordManager.search(null, null, offset++ * limit_once, limit_once);

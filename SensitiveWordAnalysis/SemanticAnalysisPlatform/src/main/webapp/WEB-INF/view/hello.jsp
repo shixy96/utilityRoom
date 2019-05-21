@@ -14,13 +14,13 @@
 			<div class="input-wrap">
 				<div class="operate">
 					<div class="operate-left">
-						<div class='mode-tab mode-tab-checked' onClick="getSegmentResult()">分词</div>
-						<div class='mode-tab' onClick="getNearestResult()">相似词语</div>
-						<div class='mode-tab' onClick="getTextDependenciesResult()">语义依存关系</div>
-						<div class='mode-tab' onClick="getTextAnalysisResult()">敏感分析</div>
+						<div class='mode-tab mode-tab-checked'>分词</div>
+						<div class='mode-tab'>相似词语</div>
+						<div class='mode-tab'>依存句法关系</div>
+						<div class='mode-tab'>敏感识别</div>
 					</div>
 					<div class="operate-center">
-						<div class="button-img" onClick="getResult()"></div>
+						<div id="translateBtn" class="button-img"></div>
 					</div>
 					<div class="operate-right">
 						<div id="attributeTab" class="attribute-tab" onClick="changeAttribute()">显示词性</div>
@@ -45,19 +45,13 @@
 	<script type="text/javascript">
 		var textIndex = 0;
 		var wordIndex = 0;
-		var placeholders = [
-			'我新造一个词叫幻想乡你能识别并正确标注词性吗？', 
-			"徐先生还具体帮助他确定了把画雄鹰、松鼠和麻雀作为主攻目标。",
-			'我的希望是希望张晚霞的背影被晚霞映红',
-			'今天，刘志军案的关键人物,山西女商人丁书苗在市二中院出庭受审。', 
-			'刘喜杰石国祥会见吴亚琴先进事迹报告团成员' 
-		];
 		var showAttribute = false;
-		var modeTypes = ["分词", "相似词语", "语义依存关系", "敏感分析"]
+		var modeTypes = ["分词", "相似词语", "依存句法关系", "敏感识别"]
 		var modeType = "分词";
 		var segmentWords = "";
 		
 		$(function() {
+			$(".dependenceContent").addClass("hidden");
 			$(".mode-tab").click(function() {
 				modeType = $(this).html();
 				$(".mode-tab").removeClass("mode-tab-checked");
@@ -68,15 +62,31 @@
 				} else {
 					$("#attributeTab").removeClass("disable");
 				}
+				getResult();
 			});
 		});
+		
+		$("#translateBtn").click(function(){
+			getResult();
+		});
+		
+		function dependencyClear() {
+			$("#input").text("");
+			$(".dependenceContent").addClass("hidden");
+			$("#outputArea").html("");
+		}
 
 		function addText() {
-			textIndex = ++textIndex % placeholders.length;
-			$('#inputArea').val(placeholders[textIndex]);
+			$.get('getText', function(result) {
+				if (result.hr == 0 && result.data) {
+					$('#inputArea').val(result.data);
+					getResult();
+				}
+			});
 		}
 		
 		function getResult() {
+			dependencyClear();
 			if(modeType == modeTypes[0]) {
 				getSegmentResult();
 			} else if(modeType == modeTypes[1]) {
@@ -89,6 +99,7 @@
 		}
 
 		function getSegmentResult() {
+			dependencyClear();
 			var text = $('#inputArea').val();
 			$.get('getTextSegmentResult', {
 				text : text
@@ -113,7 +124,7 @@
 		}
 
 		function getNearestResult() {
-			$("#outputArea").val("");
+			dependencyClear();
 			var text = $('#inputArea').val();
 			$.get('getTextNearestResult', {
 				text : text
@@ -143,7 +154,7 @@
 		}
 		
 		function getTextDependenciesResult() {
-			$("#outputArea").val("");
+			dependencyClear();
 			var text = $('#inputArea').val();
 			$.get('getTextDependenciesResult', {
 				text : text
@@ -151,19 +162,24 @@
 				if (result.hr == 0 && result.data) {
 					$("#outputArea").html(result.data.coNLLSentenceUIList);
 					$("#input").text(result.data.coNLLSentenceList);
+					$(".dependenceContent").removeClass("hidden");
 					$("#input").change();
 				}
 			});
 		}
 		
 		function getTextAnalysisResult() {
-			$("#outputArea").val("");
+			dependencyClear();
 			var text = $('#inputArea').val();
 			$.get('getTextAnalysisResult', {
 				text : text
 			}, function(result) {
-				if (result.hr == 0 && result.data) {
-					$("#outputArea").val(result.data);
+				if (result.hr == 0) {
+					if(result.data) {
+						$("#outputArea").html("<span style='color:red'>敏感语句</span>");
+					} else {
+						$("#outputArea").html("非敏感语句");
+					}
 				}
 			});
 		}

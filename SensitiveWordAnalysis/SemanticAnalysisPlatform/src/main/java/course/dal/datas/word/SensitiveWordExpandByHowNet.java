@@ -1,15 +1,10 @@
 package course.dal.datas.word;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,6 +16,7 @@ import course.bll.SensitiveWordManager;
 import course.dal.bean.HowNetData;
 import course.dal.bean.SensitiveNatureLevel;
 import course.dal.bean.SensitiveWordData;
+import course.util.IOUtil;
 import course.util.StringUtil;
 
 public class SensitiveWordExpandByHowNet {
@@ -30,13 +26,15 @@ public class SensitiveWordExpandByHowNet {
 			.getBean("sensitiveWordManager");
 	private static HowNetWordManager howNetWordManager = (HowNetWordManager) context.getBean("howNetWordManager");
 
-	private static final String fileNames[] = new String[] { "src/test/resources/敏感词拓展(level2).txt",
-			"src/test/resources/敏感词拓展(level1).txt" };
-	private static final int[] levels = new int[] { SensitiveNatureLevel.secondaryExpansion.level(),
-			SensitiveNatureLevel.threeLevelExpansion.level() };
-
+	private static final String outFileNames[] = new String[] { 
+			"src/test/resources/敏感词拓展(level2).txt",
+			"src/test/resources/敏感词拓展(level1).txt" 
+		};
+	private static final int[] levels = new int[] { 
+			SensitiveNatureLevel.secondaryExpansion.level(),
+			SensitiveNatureLevel.threeLevelExpansion.level() 
+		};
 	private static final int limit_once = 500;
-	private static Logger logger = LoggerFactory.getLogger(SensitiveWordExpandByHowNet.class);
 
 	public static void main(String args[]) {
 		int offset = 0;
@@ -47,7 +45,8 @@ public class SensitiveWordExpandByHowNet {
 				ExpandSensitive(datas.get(i).getWord());
 			}
 			System.out.println(offset * limit_once);
-			datas = sensitiveWordManager.search(null, SensitiveNatureLevel.source.level(), offset++ * limit_once, limit_once);
+			datas = sensitiveWordManager.search(null, SensitiveNatureLevel.source.level(), offset++ * limit_once,
+					limit_once);
 		}
 	}
 
@@ -98,7 +97,7 @@ public class SensitiveWordExpandByHowNet {
 			if (!sensitiveWordManager.exist(expand)) {
 				String msg = originWord + "/" + word + "---拓展---" + expand + "\n";
 				System.out.print(msg);
-				output_to_file(msg, fileNames[senLevel]);
+				IOUtil.output_to_file(msg, outFileNames[senLevel], true);
 				sensitiveWordManager.insert(expand, levels[senLevel]);
 			}
 		}
@@ -124,25 +123,4 @@ public class SensitiveWordExpandByHowNet {
 		return expandExp;
 	}
 
-	private static void output_to_file(String content, String filename) {
-		if (content != null) {
-			BufferedWriter fp_save = null;
-			try {
-				fp_save = new BufferedWriter(new FileWriter(filename, true));
-				fp_save.write(content.toString());
-				fp_save.close();
-			} catch (IOException e) {
-				logger.error("can't open file " + filename, e);
-				System.exit(1);
-			} finally {
-				if(fp_save!=null) {
-					try {
-						fp_save.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
 }

@@ -51,3 +51,7 @@ input:focus, textarea:focus, select:focus {
 .disable {
 	opacity: 0.5;
 }
+
+.hidden {
+	display: none;
+}
