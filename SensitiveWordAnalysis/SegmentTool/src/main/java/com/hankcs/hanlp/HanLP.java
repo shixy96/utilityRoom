@@ -216,8 +216,12 @@ public class HanLP {
 						throw e;
 				}
 				String root = p.getProperty("root", "").replaceAll("\\\\", "/");
-				if (root.length() > 0 && !root.endsWith("/"))
+				if (root.isEmpty()) {
+					root = loader.getResource("").getPath();
+				}
+				if (root.length() > 0 && !root.endsWith("/")) {
 					root += "/";
+				}
 				CoreDictionaryPath = root + p.getProperty("CoreDictionaryPath", CoreDictionaryPath);
 				CoreDictionaryTransformMatrixDictionaryPath = root + p.getProperty(
 						"CoreDictionaryTransformMatrixDictionaryPath", CoreDictionaryTransformMatrixDictionaryPath);
