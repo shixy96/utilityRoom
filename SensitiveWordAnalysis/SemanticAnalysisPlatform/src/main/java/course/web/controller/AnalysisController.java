@@ -23,6 +23,7 @@ import com.hankcs.hanlp.seg.common.Term;
 import course.bll.SematicAnalysisManager;
 import course.bll.SensitiveVecManager;
 import course.bll.TxtCollectionManager;
+import course.dal.bean.TxtCollectionData;
 import course.tool.AuxiliaryTool;
 import course.web.common.GenericJsonResult;
 import course.web.common.HResult;
@@ -46,7 +47,10 @@ public class AnalysisController {
 	public @ResponseBody GenericJsonResult<String> getTxt(HttpServletRequest request, HttpServletResponse response) {
 		GenericJsonResult<String> result = new GenericJsonResult<String>(HResult.S_OK);
 		int index = (int) Math.floor(Math.random() * 20400);
-		result.setData(txtCollectionManager.search(null, null, index, 1).get(0).getContent());
+		List<TxtCollectionData> list = txtCollectionManager.search(null, null, index, 1);
+		if (!list.isEmpty()) {
+			result.setData(list.get(0).getContent());
+		}
 		return result;
 	}
 
