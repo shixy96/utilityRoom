@@ -1,8 +1,11 @@
-package course.train.sematicparams;
+package course.train.sematicparams.support;
 
 import java.io.IOException;
 
 import course.dal.bean.SematicParams;
+import course.train.sematicparams.ExportMarkedFile;
+import course.train.sematicparams.SvmTrain;
+import course.train.sematicparams.Train;
 
 public class TransformNearestTrain implements Train {
 	public static double BEST_SBV = 0.8;

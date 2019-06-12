@@ -31,16 +31,35 @@ public class ExportMarkedFile {
 
 	private int limit_once = 1000;
 	private int max_word = 21;
-	private double train_rate = 0.80;
-	private boolean useNearest = false;
-	private boolean useTranslate = true;
-	private boolean useLuMethod = false;
-	private boolean loopFile = false;
-	private double[] nearest_rates = { .55, .65, .75, .85, .95 };
-	private String Train_File_Name = "src/test/resources/ExportMarkedFileTrain.txt";
-	private String Test_File_Name = "src/test/resources/ExportMarkedFileText.txt";
-	private WordVectorModel wordVectorModel;
-	private final String MODEL_FILE_NAME = "I:/CS224n_NLP/data/test/word2vec.txt";
+	/**
+	 * 训练比例
+	 */
+	public static double train_rate = 0.80;
+	/**
+	 * 使用词语相关性拓展
+	 */
+	public static boolean useNearest = false;
+	/**
+	 * 使用词语按句法敏感性传递
+	 */
+	public static boolean useTranslate = true;
+	/**
+	 * 词语相关性比例
+	 */
+	public static double nearest_rate = 0.95;
+	/**
+	 * 训练数据保存文件
+	 */
+	public static String Train_File_Name = "src/test/resources/ExportMarkedFileTrain.txt";
+	/**
+	 * 测试数据保存文件
+	 */
+	public static String Test_File_Name = "src/test/resources/ExportMarkedFileText.txt";
+	public static String MODEL_FILE_NAME = "I:/CS224n_NLP/data/test/word2vec.txt";
+	public static WordVectorModel wordVectorModel;
+	public static double[] nearest_rates = { .55, .65, .75, .85, .95 };
+	public static boolean useLuMethod = false;
+	public static boolean loopFile = false;
 
 	{
 		try {
@@ -50,6 +69,11 @@ public class ExportMarkedFile {
 		}
 	}
 
+	/**
+	 * 
+	 * @param sematicParams 词语敏感性按句法传递参数
+	 * @param nearest_rate_index 词语相关性拓展比例
+	 */
 	public void markExport(SematicParams sematicParams, int nearest_rate_index) {
 		boolean trainStart = false, testStart = false;
 		if (!loopFile) {

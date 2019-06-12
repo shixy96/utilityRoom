@@ -1,4 +1,4 @@
-package course.train.sematicparams;
+package course.train.sematicparams.support;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import course.dal.bean.SematicParams;
+import course.train.sematicparams.ExportMarkedFile;
+import course.train.sematicparams.SvmTrain;
 import course.util.IOUtil;
 
-public class FindBetterRules {
+public class FindBetterParamsGreed {
 	private int nearest_rate_index = 1;
 	private final int arraySize = 8;
 	private boolean changed = false;
@@ -40,14 +42,14 @@ public class FindBetterRules {
 
 	private SvmTrain svmTrain;
 	private ExportMarkedFile exportMarkedFile;
-	public static final String trainFileName = "src/test/resources/FindBetterParams/FindBetterRules/AnalysisSematicTrain.txt";
-	public static final String testFileName = "src/test/resources/FindBetterParams/FindBetterRules/AnalysisSematicTest.txt";
-	public static final String processFileName = "src/test/resources/FindBetterParams/FindBetterRules/precess.txt";
-	public static final String processLoopFileName = "src/test/resources/FindBetterParams/FindBetterRules/precessLoop.txt";
-	public static final String resultFileName = "src/test/resources/FindBetterParams/FindBetterRules/result.txt";
+	public static final String trainFileName = "src/test/resources/FindBetterParams/FindBetterParamsGreed/AnalysisSematicTrain.txt";
+	public static final String testFileName = "src/test/resources/FindBetterParams/FindBetterParamsGreed/AnalysisSematicTest.txt";
+	public static final String processFileName = "src/test/resources/FindBetterParams/FindBetterParamsGreed/precess.txt";
+	public static final String processLoopFileName = "src/test/resources/FindBetterParams/FindBetterParamsGreed/precessLoop.txt";
+	public static final String resultFileName = "src/test/resources/FindBetterParams/FindBetterParamsGreed/result.txt";
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		FindBetterRules findBetterParams = new FindBetterRules();
+		FindBetterParamsGreed findBetterParams = new FindBetterParamsGreed();
 		findBetterParams.exportMarkedFile = new ExportMarkedFile();
 		findBetterParams.exportMarkedFile.setUseNearest(false);
 		findBetterParams.exportMarkedFile.setUseTranslate(true);

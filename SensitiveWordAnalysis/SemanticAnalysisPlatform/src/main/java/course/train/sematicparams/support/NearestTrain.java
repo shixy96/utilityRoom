@@ -1,6 +1,10 @@
-package course.train.sematicparams;
+package course.train.sematicparams.support;
 
 import java.io.IOException;
+
+import course.train.sematicparams.ExportMarkedFile;
+import course.train.sematicparams.SvmTrain;
+import course.train.sematicparams.Train;
 
 public class NearestTrain implements Train {
 	private int nearest_rate_index = 1;

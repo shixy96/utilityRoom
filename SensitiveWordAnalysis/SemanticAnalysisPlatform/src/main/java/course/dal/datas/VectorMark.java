@@ -19,6 +19,7 @@ import course.dal.bean.SensitiveWordData;
 import course.dal.bean.TxtCollectionData;
 import course.util.IOUtil;
 
+@Deprecated
 public class VectorMark {
 
 	private static ApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");

@@ -15,17 +15,40 @@ import course.libsvm.lib.svm_problem;
 import course.util.IOUtil;
 
 public class SvmTrain {
+	/**
+	 * 训练数据文件名
+	 */
 	private String Train_File_Name = "src/test/resources/SvmTrain.txt";
+	
+	/**
+	 * 测试数据文件名
+	 */
 	private String Test_File_Name = "src/test/resources/SvmText.txt";
+	
+	/**
+	 * 敏感语句分析模型文件名
+	 */
 	private String Model_File_Name = "src/test/resources/Svmmodel.txt";
+	
+	/**
+	 * 训练结果文件名
+	 */
 	private String Result_File_Name = "src/test/resources/SvmResult.txt";
+	
+	/**
+	 * libsvm相关配置
+	 */
 	private int svm_type = svm_parameter.C_SVC;
 	private int kernel_type = svm_parameter.RBF;
 	private double C = 2;
 	private double gamma = 2;
 	private double cache_size = 100;
 	private double eps = 0.00001;
-
+	
+	/**
+	 * 敏感向量训练接口
+	 * @return 训练结果F1值
+	 */
 	public double training() {
 		List<Double> label = new ArrayList<Double>();
 		List<svm_node[]> nodeSet = new ArrayList<svm_node[]>();

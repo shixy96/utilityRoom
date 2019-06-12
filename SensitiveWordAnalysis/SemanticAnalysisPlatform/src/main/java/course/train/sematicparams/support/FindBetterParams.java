@@ -1,4 +1,4 @@
-package course.train.sematicparams;
+package course.train.sematicparams.support;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import course.dal.bean.SematicParams;
+import course.train.sematicparams.ExportMarkedFile;
+import course.train.sematicparams.SvmTrain;
+import course.train.sematicparams.Train;
 import course.util.ArrayUtil;
 import course.util.IOUtil;
 

@@ -1,8 +1,11 @@
-package course.train.sematicparams;
+package course.train.sematicparams.support;
 
 import java.io.IOException;
 
 import course.dal.bean.SematicParams;
+import course.train.sematicparams.ExportMarkedFile;
+import course.train.sematicparams.SvmTrain;
+import course.train.sematicparams.Train;
 
 public class TransformTrain implements Train {
 //	SBV: 0.8	VOB: 0.0	IOB: 0.2	FOB: 0.7	DBL: 0.5	ATT: 0.0	ADV: 0.0	CMP: 0.0	
