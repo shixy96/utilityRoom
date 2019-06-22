@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="680.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="shixy.trajectory.controller.TrajOverviewController">
+	<children>
+		<MenuBar fx:id="menubar" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<menus>
+				<Menu fx:id="file" mnemonicParsing="false" text="文件(F)">
+					<items>
+						<Menu fx:id="insert" mnemonicParsing="false" text="插入(I)">
+							<items>
+								<MenuItem fx:id="ins_floder" mnemonicParsing="false" onAction="#INS_Floder" text="文件夹" />
+								<MenuItem fx:id="ins_file" mnemonicParsing="false" onAction="#INS_File" text="文件" />
+							</items>
+						</Menu>
+						<MenuItem fx:id="exit" mnemonicParsing="false" onAction="#Exit" text="退出(X)" />
+					</items>
+				</Menu>
+				<Menu fx:id="edit" mnemonicParsing="false" text="编辑(E)">
+					<items>
+						<Menu fx:id="del" mnemonicParsing="false" text="删除(D)">
+							<items>
+								<MenuItem fx:id="del_flder" mnemonicParsing="false" onAction="#Del_Folder" text="文件夹" />
+								<MenuItem fx:id="del_file" mnemonicParsing="false" onAction="#Del_File" text="文件" />
+							</items>
+						</Menu>
+					</items>
+				</Menu>
+				<Menu fx:id="analysis" mnemonicParsing="false" text="分析(A)">
+					<items>
+						<RadioMenuItem fx:id="ana_single" mnemonicParsing="false" onAction="#Ana_Single" selected="true" text="个体分析">
+							<toggleGroup>
+								<ToggleGroup fx:id="Ana_Group" />
+							</toggleGroup>
+						</RadioMenuItem>
+						<RadioMenuItem fx:id="ana_group" mnemonicParsing="false" onAction="#Ana_Group" text="群组分析" toggleGroup="$Ana_Group" />
+						<MenuItem fx:id="groupEdit" disable="true" mnemonicParsing="false" onAction="#Group_Edit" text="GroupEdit" />
+					</items>
+				</Menu>
+				<Menu fx:id="map" mnemonicParsing="false" text="绘图(M)">
+					<items>
+						<MenuItem fx:id="map_trajectory" mnemonicParsing="false" onAction="#Map_Trajectory" text="轨迹图" />
+						<MenuItem fx:id="map_hotspot" mnemonicParsing="false" onAction="#Map_Hotspot" text="热点图" />
+						<MenuItem fx:id="map_three" mnemonicParsing="false" onAction="#Map_Three" text="三维图(时间)" />
+                  <MenuItem fx:id="time_predict" mnemonicParsing="false" onAction="#Time_Predict" text="时间预测" />
+						<MenuItem fx:id="map_clear" mnemonicParsing="false" onAction="#Map_Clear" text="清除" />
+					</items>
+				</Menu>
+				<Menu fx:id="help" mnemonicParsing="false" text="帮助(H)">
+					<items>
+						<MenuItem fx:id="help_format" mnemonicParsing="false" onAction="#Help_Formation" text="数据文件格式" />
+						<MenuItem fx:id="help_about" mnemonicParsing="false" onAction="#Help_About" text="About" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+		<SplitPane fx:id="split_big" dividerPositions="0.15" layoutX="10.0" layoutY="35.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+			<items>
+				<TreeView fx:id="treeview" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+				<SplitPane fx:id="split_small" dividerPositions="0.7053435114503817" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL">
+					<items>
+						<TabPane fx:id="tabpane_Map" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
+							<tabs>
+								<Tab fx:id="tab_Map" text="地图">
+									<content>
+										<WebView fx:id="webview" disable="true" prefHeight="500.0" prefWidth="700.0" />
+									</content>
+								</Tab>
+							</tabs>
+						</TabPane>
+						<TabPane fx:id="tabpane_bar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
+							<tabs>
+								<Tab fx:id="tab_bar" text="时间">
+									<content>
+										<LineChart title="出行时间分布情况">
+											<xAxis>
+												<NumberAxis label="时间(24小时制)" prefHeight="16.0" prefWidth="825.0" side="BOTTOM" />
+											</xAxis>
+											<yAxis>
+												<NumberAxis label="百分比%" side="LEFT" />
+											</yAxis>
+										</LineChart>
+									</content>
+								</Tab>
+							</tabs>
+						</TabPane>
+					</items>
+				</SplitPane>
+			</items>
+		</SplitPane>
+		<HBox layoutX="301.0" layoutY="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="713.0" spacing="20.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+			<children>
+      				<Label fx:id="startime" layoutX="301.0" layoutY="7.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" text="选择开始时间" />
+				<DatePicker fx:id="startDatePicker" layoutX="326.0" layoutY="3.0" prefHeight="25.0" promptText="2000-1-1" />
+				<Label fx:id="endtime" layoutX="555.0" layoutY="7.0" prefHeight="25.0" text="选择结束时间">
+					<HBox.margin>
+						<Insets left="50.0" />
+					</HBox.margin>
+				</Label>
+				<DatePicker fx:id="endDatePicker" layoutX="650.0" layoutY="4.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" promptText="2010-1-1" />
+            <Button mnemonicParsing="false" onAction="#Map_Three" prefHeight="25.0" prefWidth="68.0" text="三维展示" />
+			</children>
+		</HBox>
+	</children>
+</AnchorPane>

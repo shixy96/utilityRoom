@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+body, html, #allmap {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	font-family: "微软雅黑";
+}
+</style>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=sGSOaO07WkRHHiCRxxbSQVBn"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<title>Hello</title>
+</head>
+
+<body>
+	<div id="allmap"></div>
+	<label>滚动值:</label>(IE/Opera)
+	<script type="text/javascript">
+        var zoom = [2000000, 1000000, 500000, 200000, 100000, 50000, 25000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50];// /
+																																// /级别18到3。
+        var map = new BMap.Map("allmap", { minZoom: 10, maxZoom: 28 });
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 28);
+        
+        map.enableScrollWheelZoom(true);// / / 滚轮放大缩小。
+        map.addControl(new BMap.NavigationControl());
+        map.addControl(new BMap.ScaleControl());
+        map.addControl(new BMap.MapTypeControl());
+
+        map.addEventListener("dblclick",function(e){
+        	var allOverlay = map.getOverlays();
+    		for (var i = 0; i < allOverlay.length; i++){
+				map.removeOverlay(allOverlay[i]);
+    		}
+    		predictServer.print("addMarker")
+    		addMarker(e.point)
+    	});
+        
+        function addMarker(point) {
+            point = new BMap.Point(point.lng, point.lat);
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);
+            marker.addEventListener("click", function () {
+            	showInfo(this, point);
+            });
+        }
+
+        function showInfo(thisMaker, point) {
+            var sContent = 
+            	'<ul style="margin:0 0 5px 0;padding:0.2em 0">'
+                + '<li style="line-height: 26px;font-size: 15px;">'
+                + '<span style="width: 100px;display: inline-block;">经度(东经)：</span>'
+                + point.lng
+                + '</li>'
+                + '<span style="width: 100px;display: inline-block;">纬度(北纬)：</span>'
+                + point.lat + '</br>'
+                + '</li>'
+                + '<span style="width: 120px;display: inline-block;">预测经过时间：</span>'
+                + '上午'
+                + '</li>' + 
+                '</ul>';
+            var infoWindow = new BMap.InfoWindow(sContent); // 创建信息窗口对象
+            thisMaker.openInfoWindow(infoWindow); // 图片加载完毕重绘infowindow
+        }
+        
+        function predict(lat, lng) {
+        	return predictServer.predict(lat, lng);
+        }
+    </script>
+</body>
+
+</html>

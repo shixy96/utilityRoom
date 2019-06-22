@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+body, html, #allmap {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	font-family: "微软雅黑";
+}
+</style>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=sGSOaO07WkRHHiCRxxbSQVBn"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<title>Hello</title>
+</head>
+
+<body>
+	<div id="allmap"></div>
+	<label>滚动值:</label>(IE/Opera)
+	<script type="text/javascript">
+        var zoom = [2000000, 1000000, 500000, 200000, 100000, 50000, 25000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50];// /
+																																// /级别18到3。
+        var map = new BMap.Map("allmap", { minZoom: 10, maxZoom: 28 });
+        map.centerAndZoom(new BMap.Point(116.404, 39.915), 28);// /
+																// /设置中心点和显示级别。中国。
+        map.enableScrollWheelZoom(true);// / / 滚轮放大缩小。
+        map.addControl(new BMap.NavigationControl());
+        map.addControl(new BMap.ScaleControl());
+        map.addControl(new BMap.MapTypeControl());
+    	var walk = new BMap.Icon("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_directions_walk_48px-32.png", new BMap.Size(300,157));
+    	var bike = new BMap.Icon("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_directions_walk_48px-32.png", new BMap.Size(300,157));
+    	var car = new BMap.Icon("https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_directions_walk_48px-32.png", new BMap.Size(300,157));
+
+        map.addEventListener("zoomend", zoomChange);
+        map.addEventListener("dragend", zoomChange);
+        map.addEventListener("dblclick",function(e){
+        	var allOverlay = map.getOverlays();
+    		for (var i = 0; i < allOverlay.length; i++){
+				map.removeOverlay(allOverlay[i]);
+    		}
+    		addMarker(e.point)
+    	});
+        var isFirst;
+
+        function firstLoad() {
+            isFirst = true;
+            showBaiduMap(isFirst);
+            isFirst = false;
+        }
+
+        function zoomChange() {
+            if(isOrigin) {
+            	showBaiduMap();
+            } else {
+            	showHotPoint();
+            }
+        }
+        function showHotPoint() {
+        	map.clearOverlays();
+        	var bs = map.getBounds();   // 获取可视区域
+            var bssw = bs.getSouthWest();   // 可视区域左下角
+            var bsne = bs.getNorthEast();   // 可视区域右上角
+            var i;
+            var points =[];
+            var datas = sqlTest.searchTrajectoryDatas(
+            		memberList, 
+            		bsne.lat+0.0004,
+            		bsne.lng+0.0008,
+            		bssw.lat-0.0004,
+            		bssw.lng-0.0008);
+            
+            for(i=0;i<datas.size();i++){
+            	points.push({
+            		"lng":datas.get(i).getLng(),
+            		"lat":datas.get(i).getLat(),
+            		"count":datas.get(i).getNum()
+            	})
+            }
+        	heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":300});
+        	map.addOverlay(heatmapOverlay);
+        	heatmapOverlay.setDataSet({data:points,max:20});
+        	return;
+        }
+        
+        function showBaiduMap(isFirst) {
+            var bs = map.getBounds();   // 获取可视区域
+            var bssw = bs.getSouthWest();   // 可视区域左下角
+            var bsne = bs.getNorthEast();   // 可视区域右上角
+            if (memberList.size()==1) {
+                map.clearOverlays();
+            }
+            var points = []; // 添加海量点数据
+            var point;
+            var lastpoint;
+            var j = 0;
+            for(item=0;item<memberList.size();item++){
+				var data = sqlTest.searchTrajectoryData(
+						memberList.get(item), 
+						bsne.lat+0.0003,
+	            		bsne.lng+0.0006,
+	            		bssw.lat-0.0003,
+	            		bssw.lng-0.0006);
+				var pointsLen = data.size();
+				predictServer.print(item+"共"+pointsLen);
+				if(pointsLen==1 && isFirst){
+					predictServer.print("第一个，重定位");
+					map.centerAndZoom(new BMap.Point(data.get(0).getLng(), data.get(0).getLat()), 28);
+					return;
+				}
+				for (var i = 0; i < pointsLen-1; i++) {
+					point = new BMap.Point(data.get(i).getLng(), data.get(i).getLat());
+					if (j == 0) {
+						predictServer.print("第一个");
+						points.push(point);
+						j++;
+						lastpoint = point;
+					} else if (map.getDistance(point, lastpoint).toFixed(2) >= zoom[map.getZoom() - 4]) {
+// var marker2 = new BMap.Marker(new BMap.Point(
+// (point.lng+lastpoint.lng)/2,
+// (point.lat+lastpoint.lat)/2),
+// {icon:walk}); // 创建标注
+// map.addOverlay(marker2); // 将标注添加到地图中
+				    	
+						points.push(point);
+						j++
+						lastpoint = point;
+					}
+				}
+				predictServer.print("共"+j+"个");
+			}
+// sqlTest.print("图标");
+            var sy = new BMap.Symbol(BMap_Symbol_SHAPE_BACKWARD_OPEN_ARROW, {
+                scale: 0.6,// 图标缩放大小
+                strokeColor:'#fff',// 设置矢量图标的线填充颜色
+                strokeWeight: '2',// 设置线宽
+            });
+            var icons = new BMap.IconSequence(sy, '10', '30');
+// sqlTest.print("创建polyline对象");
+            // 创建polyline对象
+            var polyline =new BMap.Polyline(points, {
+               enableEditing: false,// 是否启用线编辑，默认为false
+               enableClicking: true,// 是否响应点击事件，默认为true
+               icons:[icons],
+               strokeWeight:'8',// 折线的宽度，以像素为单位
+               strokeOpacity: 0.8,// 折线的透明度，取值范围0 - 1
+               strokeColor:"#18a45b" // 折线颜色
+            });
+// sqlTest.print("增加折线");
+            map.addOverlay(polyline);          // 增加折线
+// sqlTest.print("结束");
+            return;
+		}
+
+        function addMarker(point) {
+            point = new BMap.Point(point.lng, point.lat);
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);
+            marker.addEventListener("click", function () {
+            	showInfo(this, point);
+            });
+        }
+
+        function showInfo(thisMaker, point) {
+            var sContent = 
+            	'<ul style="margin:0 0 5px 0;padding:0.2em 0">'
+                + '<li style="line-height: 26px;font-size: 15px;">'
+                + '<span style="width: 100px;display: inline-block;">经度(东经)：</span>'
+                + point.lng
+                + '</li>'
+                + '<span style="width: 100px;display: inline-block;">纬度(北纬)：</span>'
+                + point.lat + '</br>'
+                + '</li>'
+                + '<span style="width: 120px;display: inline-block;">预测经过时间：</span>'
+                + predict(point.lat, point.lng);
+                + '</li>' + 
+                '</ul>';
+            var infoWindow = new BMap.InfoWindow(sContent); // 创建信息窗口对象
+            thisMaker.openInfoWindow(infoWindow); // 图片加载完毕重绘infowindow
+        }
+        
+        function predict(lat, lng) {
+        	return predictServer.predict(lat, lng);
+        }
+    </script>
+</body>
+
+</html>
